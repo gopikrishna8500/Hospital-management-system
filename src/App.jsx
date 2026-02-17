@@ -2,16 +2,30 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import FeatureSection from "./components/FeatureSection";
+import CallToActionSection from "./components/CallToActionSection";
+import DepartmentsServicesSection from "./components/DepartmentsServicesSection";
+import StatsSection from "./components/StatsSection";
+import TestimonialsSection from "./components/TestimonialsSection";
 import ScrollToTop from "./ScrollToTop";
-
+import LoginPage from "./pages/LoginPage";
 import HeroSection from "./components/HeroSection";
+import DashboardLayout from "./layout/DashboardLayout";
+import AdminDashboard from "./pages/AdminDashboard";
+import PatientRegistration from "./pages/PatientRegistration";
+import PatientRecords from "./pages/PatientRecords";
+import MedicalReports from "./pages/MedicalReports";
+import Appointments from "./pages/Appointments";
+import BedManagement from "./pages/BedManagement";
+import Billing from "./pages/Billing";
+import AboutUsPage from "./pages/AboutUsPage";
+import Doctors from "./pages/Doctors";
+import Departments from "./pages/Departments";
 // import ServicesSection from "./components/ServicesSection";
 // import AboutSection from "./components/AboutSection";
-// import JobSection from "./components/JobSection";
-// import TestimonialSection from "./components/TestimonialSection";
 // import ContactSection from "./components/ContactSection";
-// import ClientLogos from "./components/ClientLogos";
-// import AboutUsPage from "./components/AboutUsPage";
+// import ClientLogos from "./pages/ClientLogos";
+
 import ContactUsPage from "./components/ContactUsPage";
 // import Services from "./components/Services";
 // import JobSeekerPage from "./components/JobSeekerPage";
@@ -39,18 +53,22 @@ function App() {
       <div className="">
         <Header />
         <ScrollToTop />
-        
+
         <Routes>
           <Route
             path="/"
             element={
               <>
-              <HeroSection />
+                <HeroSection />
+                <FeatureSection />
+                <CallToActionSection />
+                <DepartmentsServicesSection />
+                <StatsSection />
+                <TestimonialsSection />
                 {/*
                 <AboutSection />
                 <ServicesSection />
                 <JobSection />
-                <TestimonialSection />
                 <ClientLogos />
                 <ContactSection />  */}
                 <button
@@ -64,7 +82,20 @@ function App() {
             }
           />
           <Route path="/contact-us" element={<ContactUsPage />} />
-          {/* <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<DashboardLayout />}>
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/patient-registration" element={<PatientRegistration />} />
+            <Route path="/patient-records" element={<PatientRecords />} />
+            <Route path="reports" element={<MedicalReports />} />
+            <Route path="appointments" element={<Appointments />} />
+            <Route path="beds" element={<BedManagement />} />
+            <Route path="billing" element={<Billing />} />
+          </Route>
+          <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/doctors" element={<Doctors />} />
+          <Route path="/departments" element={<Departments />} />
+          {/* 
           
           <Route path="/services" element={<Services />} />
           <Route path="/careers" element={<CareersPage />} />
@@ -82,3 +113,4 @@ function App() {
 }
 
 export default App;
+

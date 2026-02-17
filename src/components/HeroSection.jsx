@@ -7,7 +7,7 @@ const HeroSection = () => {
 
   const slides = [
   {
-    image: "https://images.unsplash.com/photo-1666214280557-f1b5022eb634?auto=format&fit=crop&w=1600&q=60",
+    image: "https://5.imimg.com/data5/ANDROID/Default/2024/9/452669990/KA/CF/MV/54596979/product-jpeg-1000x1000.jpg",
         title: "Smart Patient Tracking. Seamless Hospital Management.",
     subtitle: "RunsEra MediTrack is a secure, intelligent hospital management system designed to streamline patient care and optimize hospital operations.",
     description: "From patient registration to discharge, billing to EMR, and inventory to analytics — MediTrack centralizes every hospital operation into one powerful, secure platform.",
