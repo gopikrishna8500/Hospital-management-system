@@ -182,7 +182,7 @@ const ContactUsPage = () => {
             Hospital Location
           </h2>
 
-          <div className="rounded-xl overflow-hidden shadow-lg h-[450px]">
+          <div className="rounded-xl overflow-hidden shadow-lg h-112.5">
             <iframe
               title="Hospital Location"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.943860165385!2d-73.9905936845928!3d40.74881797932744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259af18b0b6bb%3A0x7f33d0b5b29d4d5b!2sNew%20York!5e0!3m2!1sen!2sus!4v1616587890123!5m2!1sen!2sus"

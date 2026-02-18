@@ -10,6 +10,7 @@ import TestimonialsSection from "./components/TestimonialsSection";
 import ScrollToTop from "./ScrollToTop";
 import LoginPage from "./pages/LoginPage";
 import HeroSection from "./components/HeroSection";
+import DoctorProfile from "./components/DoctorProfile";
 import DashboardLayout from "./layout/DashboardLayout";
 import AdminDashboard from "./pages/AdminDashboard";
 import PatientRegistration from "./pages/PatientRegistration";
@@ -25,7 +26,7 @@ import Departments from "./pages/Departments";
 // import AboutSection from "./components/AboutSection";
 // import ContactSection from "./components/ContactSection";
 // import ClientLogos from "./pages/ClientLogos";
-
+import DepartmentDetails from "./pages/DepartmentDetails";
 import ContactUsPage from "./components/ContactUsPage";
 // import Services from "./components/Services";
 // import JobSeekerPage from "./components/JobSeekerPage";
@@ -52,13 +53,14 @@ function App() {
     <Router>
       <div className="">
         <Header />
-        <ScrollToTop />
+     
 
         <Routes>
           <Route
             path="/"
             element={
               <>
+                 <ScrollToTop />
                 <HeroSection />
                 <FeatureSection />
                 <CallToActionSection />
@@ -95,14 +97,16 @@ function App() {
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/doctors" element={<Doctors />} />
           <Route path="/departments" element={<Departments />} />
-          {/* 
+          <Route path="/doctors/:id" element={<DoctorProfile />} />
+
+          <Route
+            path="/departments/:departmentName"
+            element={<DepartmentDetails />}
+          />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />  
           
-          <Route path="/services" element={<Services />} />
-          <Route path="/careers" element={<CareersPage />} />
-          <Route path="/jobSeeker" element={<JobSeekerPage />} />
-          <Route path="/employee" element={<EmployeePage />} />
-          <Route path="/client" element={<ClientPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} /> */}
+          {/* <Route path="/services" element={<Services />} /> */}
+        
           {/* <Route path="/portfolio" element={<PortfolioPage />} />  */}
         </Routes>
 

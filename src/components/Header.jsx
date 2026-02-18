@@ -1063,7 +1063,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center space-x-4">
               <Link
                 to="/appointment"
-                className="bg-gradient-to-r from-teal-600 to-teal-700 hover:scale-105 active:scale-95 text-white px-6 py-2.5 rounded-md shadow-lg transition-all duration-300 font-semibold"
+                className="bg-linear-to-r from-teal-600 to-teal-700 hover:scale-105 active:scale-95 text-white px-6 py-2.5 rounded-md shadow-lg transition-all duration-300 font-semibold"
               >
                 Book Appointment
               </Link>
