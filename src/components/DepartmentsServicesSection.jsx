@@ -112,7 +112,7 @@ const DepartmentsServicesSection = () => {
             />
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/30 opacity-0 group-hover:opacity-100 transition duration-500 flex flex-col justify-center items-center p-6 text-center">
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 to-black/30 opacity-0 group-hover:opacity-100 transition duration-500 flex flex-col justify-center items-center p-6 text-center">
               <h3 className="text-white text-2xl font-semibold mb-3">
                 {dept.name}
               </h3>

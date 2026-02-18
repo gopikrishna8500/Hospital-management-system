@@ -25,7 +25,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-950 via-teal-900 to-teal-800 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-teal-950 via-teal-900 to-teal-800 px-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
         
         {/* Logo / Title */}
