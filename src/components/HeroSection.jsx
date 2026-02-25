@@ -86,7 +86,7 @@ return (
           />
 
           {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70 flex items-center justify-center text-center px-6">
+          <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/50 to-black/70 flex items-center justify-center text-center px-6">
             <div className="text-white max-w-4xl">
               <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
                 {slide.title}
