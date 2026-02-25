@@ -1,8 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { doctorsData } from "../data/doctorsData";
-
+import { useNavigate } from "react-router-dom";
 const DepartmentDetails = () => {
+  const navigate = useNavigate();
   const { departmentName } = useParams();
 
   const departmentDoctors = doctorsData.filter(
@@ -40,17 +41,25 @@ const DepartmentDetails = () => {
 
               <div className="text-center mt-4">
                 <span
-                  className={`px-3 py-1 rounded-full text-sm ${
-                    doctor.availability === "Available"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-red-100 text-red-600"
-                  }`}
+                  className={`px-3 py-1 rounded-full text-sm ${doctor.availability === "Available"
+                    ? "bg-green-100 text-green-700"
+                    : "bg-red-100 text-red-600"
+                    }`}
                 >
                   {doctor.availability}
                 </span>
               </div>
+              {/* <Link
+                to="/doctors"
+                className="bg-teal-600 text-white text-center py-2 rounded-md mt-4"
+              >
+                Book Appointment
+              </Link> */}
 
-              <button className="mt-6 w-full bg-teal-600 text-white py-2 rounded-md">
+              <button
+                onClick={() => navigate("/appointments")}
+                className="mt-6 w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition"
+              >
                 Book Appointment
               </button>
             </div>
