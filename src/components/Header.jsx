@@ -1020,7 +1020,7 @@ const Header = () => {
             {/* RIGHT BUTTONS */}
             <div className="hidden lg:flex items-center space-x-4">
               <Link
-                to="/appointment"
+                to="/doctors"
                 className="bg-linear-to-r from-teal-600 to-teal-700 text-white px-6 py-2.5 rounded-md shadow-lg transition hover:scale-105"
               >
                 Book Appointment
@@ -1110,7 +1110,7 @@ const Header = () => {
                 </Link>
 
                 <Link
-                  to="/appointment"
+                  to="/doctors"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="bg-teal-600 text-white text-center py-2 rounded-md mt-3"
                 >

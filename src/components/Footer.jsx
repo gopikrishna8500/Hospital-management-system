@@ -46,7 +46,7 @@ const Footer = () => {
               <li><Link to="/about" className="footer-link">About Hospital</Link></li>
               <li><Link to="/doctors" className="footer-link">Our Doctors</Link></li>
               <li><Link to="/departments" className="footer-link">Departments</Link></li>
-              <li><Link to="/appointments" className="footer-link">Book Appointment</Link></li>
+              <li><Link to="/doctors" className="footer-link">Book Appointment</Link></li>
             </ul>
           </div>
 

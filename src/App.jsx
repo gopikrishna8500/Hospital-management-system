@@ -25,6 +25,7 @@ import Billing from "./pages/Billing";
 import AboutUsPage from "./pages/AboutUsPage";
 import Doctors from "./pages/Doctors";
 import Departments from "./pages/Departments";
+import Appointment from "./pages/Appointment"; 
 // import ServicesSection from "./components/ServicesSection";
 import DepartmentDetails from "./pages/DepartmentDetails";
 import ContactUsPage from "./components/ContactUsPage";
@@ -104,6 +105,7 @@ function App() {
           </Route>
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/doctors" element={<Doctors />} />
+        <Route path="/appointments/book/:id" element={<Appointment />} />
           <Route path="/departments" element={<Departments />} />
           <Route path="/doctors/:id" element={<DoctorProfile />} />
 
