@@ -131,9 +131,9 @@ return (
         PREMIUM SaaS INTRO SECTION
     =============================== */}
 
-    <section className="relative py-32 bg-gradient-to-br from-teal-950 via-teal-900 to-teal-800 text-white overflow-hidden">
-      <div className="absolute w-[600px] h-[600px] bg-teal-500/20 rounded-full blur-3xl top-[-150px] left-[-150px]" />
-      <div className="absolute w-[500px] h-[500px] bg-teal-300/10 rounded-full blur-3xl bottom-[-150px] right-[-150px]" />
+    <section className="relative py-32 bg-linear-to-br from-teal-950 via-teal-900 to-teal-800 text-white overflow-hidden">
+      <div className="absolute w-150 h-150 bg-teal-500/20 rounded-full blur-3xl -top-37.5 -left-37.5" />
+      <div className="absolute w-125 h-125 bg-teal-300/10 rounded-full blur-3xl -bottom-37.5 -right-37.5" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         <motion.h2
