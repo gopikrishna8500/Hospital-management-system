@@ -879,9 +879,8 @@ const Header = () => {
 
       {/* ================= MAIN HEADER ================= */}
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-white shadow-lg" : "bg-white"
-        }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg" : "bg-white"
+          }`}
       >
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-20">
@@ -1050,69 +1049,111 @@ const Header = () => {
               initial={{ opacity: 0, y: -15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
-              className="lg:hidden bg-white shadow-xl px-6 py-6"
+              transition={{ duration: 0.3 }}
+              className="lg:hidden bg-white shadow-xl px-6 py-6 absolute top-full left-0 w-full z-50"
             >
-              <nav className="flex flex-col space-y-4 font-semibold">
+              <nav className="flex flex-col space-y-4 font-semibold text-gray-800">
 
-                <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Home</Link>
-                <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
-                <Link to="/doctors" onClick={() => setIsMobileMenuOpen(false)}>Doctors</Link>
+                <Link to="/">Home</Link>
+                <Link to="/about">About Us</Link>
+                <Link to="/doctors">Doctors</Link>
 
-                {/* Departments Mobile */}
-                <button onClick={() => setMobileDeptOpen(!mobileDeptOpen)} className="flex justify-between">
+                {/* ================= DEPARTMENTS ================= */}
+                <button
+                  onClick={() => setMobileDeptOpen(!mobileDeptOpen)}
+                  className="flex justify-between items-center"
+                >
                   Departments
-                  <ChevronDown className={`${mobileDeptOpen ? "rotate-180" : ""}`} />
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${mobileDeptOpen ? "rotate-180" : ""
+                      }`}
+                  />
                 </button>
-                {mobileDeptOpen && (
-                  <div className="pl-4 flex flex-col space-y-2">
-                    {departments.map((dept) => (
-                      <Link
-                        key={dept}
-                        to={`/departments/${dept.toLowerCase().replace(/\s+/g, "-")}`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {dept}
-                      </Link>
-                    ))}
-                  </div>
-                )}
 
-                <Link to="/patient-registration" onClick={() => setIsMobileMenuOpen(false)}>
-                  Patient Registration
-                </Link>
+                <AnimatePresence>
+                  {mobileDeptOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="pl-4 flex flex-col space-y-2 text-gray-600"
+                    >
+                      {departments.map((dept) => (
+                        <Link
+                          key={dept}
+                          to={`/departments/${dept
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}`}
+                        >
+                          {dept}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-                <Link to="/patient-records" onClick={() => setIsMobileMenuOpen(false)}>
-                  Patient Records
-                </Link>
+                {/* ================= PATIENT MANAGEMENT ================= */}
+                <button
+                  onClick={() => setMobilePatientOpen(!mobilePatientOpen)}
+                  className="flex justify-between items-center"
+                >
+                  Patient Management
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${mobilePatientOpen ? "rotate-180" : ""
+                      }`}
+                  />
+                </button>
 
-                <Link to="/emr" onClick={() => setIsMobileMenuOpen(false)}>
-                  EMR
-                </Link>
+                <AnimatePresence>
+                  {mobilePatientOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="pl-4 flex flex-col space-y-2 text-gray-600"
+                    >
+                      <Link to="/patient-registration">Patient Registration</Link>
+                      <Link to="/patient-records">Patient Records</Link>
+                      <Link to="/admission">Admission & Discharge</Link>
+                      <Link to="/prescriptions">Prescriptions & Medications</Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-                <Link to="/billing" onClick={() => setIsMobileMenuOpen(false)}>
-                  Billing
-                </Link>
+                {/* ================= SERVICES ================= */}
+                <button
+                  onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                  className="flex justify-between items-center"
+                >
+                  Services
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${mobileServicesOpen ? "rotate-180" : ""
+                      }`}
+                  />
+                </button>
 
-                <Link to="/inventory" onClick={() => setIsMobileMenuOpen(false)}>
-                  Inventory
-                </Link>
+                <AnimatePresence>
+                  {mobileServicesOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="pl-4 flex flex-col space-y-2 text-gray-600"
+                    >
+                      <Link to="/emr">EMR</Link>
+                      <Link to="/billing">Billing & Insurance</Link>
+                      <Link to="/inventory">Inventory & Pharmacy</Link>
+                      <Link to="/admin-dashboard">Admin Dashboard</Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-                <Link to="/admin-dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                  Admin Dashboard
-                </Link>
-
-                <Link to="/contact-us" onClick={() => setIsMobileMenuOpen(false)}>
-                  Contact Us
-                </Link>
-
-                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                  Login
-                </Link>
+                <Link to="/contact-us">Contact Us</Link>
+                <Link to="/login">Login</Link>
 
                 <Link
                   to="/doctors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="bg-teal-600 text-white text-center py-2 rounded-md mt-3"
+                  className="bg-teal-600 text-white text-center py-2 rounded-md mt-4"
                 >
                   Book Appointment
                 </Link>
