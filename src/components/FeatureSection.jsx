@@ -1,6 +1,9 @@
 import React from "react";
 import { UserCheck, FileText, CalendarCheck, CreditCard, Box, Activity } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
+
 
 const FeaturesSection = () => {
   const navigate = useNavigate();

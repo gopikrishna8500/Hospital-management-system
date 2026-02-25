@@ -7,6 +7,9 @@ import CallToActionSection from "./components/CallToActionSection";
 import DepartmentsServicesSection from "./components/DepartmentsServicesSection";
 import StatsSection from "./components/StatsSection";
 import TestimonialsSection from "./components/TestimonialsSection";
+import WhyChooseUsSection from "./components/WhyChooseUsSection";
+import HowItWorksSection from "./components/HowItWorksSection";
+import FAQSection from "./components/FAQSection";
 import ScrollToTop from "./ScrollToTop";
 import LoginPage from "./pages/LoginPage";
 import HeroSection from "./components/HeroSection";
@@ -48,22 +51,30 @@ const PrivacyPolicyPage = () => {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="">
         <Header />
-     
+
 
         <Routes>
           <Route
             path="/"
             element={
               <>
-                 <ScrollToTop />
                 <HeroSection />
+                <WhyChooseUsSection />
                 <FeatureSection />
-                <CallToActionSection />
                 <DepartmentsServicesSection />
+                <HowItWorksSection />
                 <StatsSection />
                 <TestimonialsSection />
+                <CallToActionSection />
+                <FAQSection />
+
+
+
+
+
                 {/*
                 <AboutSection />
                 <ServicesSection />
@@ -100,10 +111,10 @@ function App() {
             path="/departments/:departmentName"
             element={<DepartmentDetails />}
           />
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />  
-          
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+
           {/* <Route path="/services" element={<Services />} /> */}
-        
+
           {/* <Route path="/portfolio" element={<PortfolioPage />} />  */}
         </Routes>
 
