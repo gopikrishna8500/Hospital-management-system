@@ -965,12 +965,28 @@ const Header = () => {
                       <Link to="/patient-registration" className="block px-5 py-3 hover:bg-teal-50">
                         Patient Registration
                       </Link>
+
                       <Link to="/patient-records" className="block px-5 py-3 hover:bg-teal-50">
                         Patient Records
                       </Link>
+
+                      {/* ✅ NEW LINKS ADDED HERE */}
+
                       <Link to="/admission" className="block px-5 py-3 hover:bg-teal-50">
-                        Admission & Discharge
+                        New Admission
                       </Link>
+
+                      <Link to="/admission-list" className="block px-5 py-3 hover:bg-teal-50">
+                        Admission List
+                      </Link>
+
+                      <Link to="/discharge" className="block px-5 py-3 hover:bg-teal-50">
+                        Patient Discharge
+                      </Link>
+                      <Link to="/discharge-list" className="block px-5 py-3 hover:bg-teal-50">
+                        Discharge List
+                      </Link>
+
                       <Link to="/prescriptions" className="block px-5 py-3 hover:bg-teal-50">
                         Prescriptions & Medications
                       </Link>
@@ -1114,12 +1130,18 @@ const Header = () => {
                     >
                       <Link to="/patient-registration">Patient Registration</Link>
                       <Link to="/patient-records">Patient Records</Link>
-                      <Link to="/admission">Admission & Discharge</Link>
+
+                      {/* ✅ NEW LINKS */}
+
+                      <Link to="/admission">New Admission</Link>
+                      <Link to="/admission-listt">Admission List</Link>
+                      <Link to="/discharge/:id">Patient Discharge</Link>
+                      <Link to="/discharge-list">Discharge List</Link>
+
                       <Link to="/prescriptions">Prescriptions & Medications</Link>
                     </motion.div>
                   )}
                 </AnimatePresence>
-
                 {/* ================= SERVICES ================= */}
                 <button
                   onClick={() => setMobileServicesOpen(!mobileServicesOpen)}

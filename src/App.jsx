@@ -20,12 +20,16 @@ import PatientRegistration from "./pages/PatientRegistration";
 import PatientRecords from "./pages/PatientRecords";
 import MedicalReports from "./pages/MedicalReports";
 import Appointments from "./pages/Appointments";
+import Discharge from "./pages/Discharge";
+import DischargeList from "./pages/DischargeList";
+import Admission from "./pages/Admission";
+import AdmissionList from "./pages/AdmissionList";
 import BedManagement from "./pages/BedManagement";
 import Billing from "./pages/Billing";
 import AboutUsPage from "./pages/AboutUsPage";
 import Doctors from "./pages/Doctors";
 import Departments from "./pages/Departments";
-import Appointment from "./pages/Appointment"; 
+import Appointment from "./pages/Appointment";
 // import ServicesSection from "./components/ServicesSection";
 import DepartmentDetails from "./pages/DepartmentDetails";
 import ContactUsPage from "./components/ContactUsPage";
@@ -105,10 +109,13 @@ function App() {
           </Route>
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/doctors" element={<Doctors />} />
-        <Route path="/appointments/book/:id" element={<Appointment />} />
+          <Route path="/appointments/book/:id" element={<Appointment />} />
           <Route path="/departments" element={<Departments />} />
           <Route path="/doctors/:id" element={<DoctorProfile />} />
-
+          <Route path="/admission" element={<Admission />} />
+          <Route path="/admission-list" element={<AdmissionList />} />
+          <Route path="/discharge/:id" element={<Discharge />} />
+          <Route path="/discharge-list" element={<DischargeList />} />
           <Route
             path="/departments/:departmentName"
             element={<DepartmentDetails />}
