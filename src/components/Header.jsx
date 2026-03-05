@@ -822,9 +822,7 @@ import React, { useState, useEffect } from "react";
 import hospitalmanagementsystemLogo from "../assets/hospitalmanagementsystemLogo.jpg";
 import { Phone, Mail, ChevronDown, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
-
-const Header = () => {
+import { Link, useLocation, useNavigate } from "react-router-dom"; const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPatientOpen, setIsPatientOpen] = useState(false);
   const [isDepartmentsOpen, setIsDepartmentsOpen] = useState(false);
@@ -835,6 +833,9 @@ const Header = () => {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem("token");
+
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -944,56 +945,58 @@ const Header = () => {
               </div>
 
               {/* Patient Management */}
-              <div
-                className="relative"
-                onMouseEnter={() => setIsPatientOpen(true)}
-                onMouseLeave={() => setIsPatientOpen(false)}
-              >
-                <button className="flex items-center hover:text-teal-600">
-                  Patient Management
-                  <ChevronDown className={`ml-1 w-4 h-4 ${isPatientOpen ? "rotate-180" : ""}`} />
-                </button>
+              {isLoggedIn && (
+                <div
+                  className="relative"
+                  onMouseEnter={() => setIsPatientOpen(true)}
+                  onMouseLeave={() => setIsPatientOpen(false)}
+                >
+                  <button className="flex items-center hover:text-teal-600">
+                    Patient Management
+                    <ChevronDown className={`ml-1 w-4 h-4 ${isPatientOpen ? "rotate-180" : ""}`} />
+                  </button>
 
-                <AnimatePresence>
-                  {isPatientOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-0 mt-4 w-64 bg-white rounded-lg shadow-xl border"
-                    >
-                      <Link to="/patient-registration" className="block px-5 py-3 hover:bg-teal-50">
-                        Patient Registration
-                      </Link>
+                  <AnimatePresence>
+                    {isPatientOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        className="absolute left-0 mt-4 w-64 bg-white rounded-lg shadow-xl border"
+                      >
+                        <Link to="/patient-registration" className="block px-5 py-3 hover:bg-teal-50">
+                          Patient Registration
+                        </Link>
 
-                      <Link to="/patient-records" className="block px-5 py-3 hover:bg-teal-50">
-                        Patient Records
-                      </Link>
+                        <Link to="/patient-records" className="block px-5 py-3 hover:bg-teal-50">
+                          Patient Records
+                        </Link>
 
-                      {/* ✅ NEW LINKS ADDED HERE */}
+                        {/* ✅ NEW LINKS ADDED HERE */}
 
-                      <Link to="/admission" className="block px-5 py-3 hover:bg-teal-50">
-                        New Admission
-                      </Link>
+                        <Link to="/admission" className="block px-5 py-3 hover:bg-teal-50">
+                          New Admission
+                        </Link>
 
-                      <Link to="/admission-list" className="block px-5 py-3 hover:bg-teal-50">
-                        Admission List
-                      </Link>
+                        <Link to="/admission-list" className="block px-5 py-3 hover:bg-teal-50">
+                          Admission List
+                        </Link>
 
-                      <Link to="/discharge" className="block px-5 py-3 hover:bg-teal-50">
-                        Patient Discharge
-                      </Link>
-                      <Link to="/discharge-list" className="block px-5 py-3 hover:bg-teal-50">
-                        Discharge List
-                      </Link>
+                        <Link to="/discharge" className="block px-5 py-3 hover:bg-teal-50">
+                          Patient Discharge
+                        </Link>
+                        <Link to="/discharge-list" className="block px-5 py-3 hover:bg-teal-50">
+                          Discharge List
+                        </Link>
 
-                      <Link to="/prescriptions" className="block px-5 py-3 hover:bg-teal-50">
-                        Prescriptions & Medications
-                      </Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                        <Link to="/prescriptions" className="block px-5 py-3 hover:bg-teal-50">
+                          Prescriptions & Medications
+                        </Link>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
 
               {/* Services */}
               <div
@@ -1048,9 +1051,22 @@ const Header = () => {
                 Contact Us
               </Link>
 
-              <Link to="/login" className="hover:text-teal-600">
-                Login
-              </Link>
+              {!isLoggedIn ? (
+                <Link to="/login" className="hover:text-teal-600">
+                  Login
+                </Link>
+              ) : (
+                <button
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    navigate("/");
+                    window.location.reload();
+                  }}
+                  className="hover:text-red-500"
+                >
+                  Logout
+                </button>
+              )}
             </nav>
 
             {/* RIGHT BUTTONS */}
@@ -1128,41 +1144,45 @@ const Header = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
+                {isLoggedIn && (
+                  <>
+                    {/* ================= PATIENT MANAGEMENT ================= */}
+                    <button
 
-                {/* ================= PATIENT MANAGEMENT ================= */}
-                <button
-                  onClick={() => setMobilePatientOpen(!mobilePatientOpen)}
-                  className="flex justify-between items-center"
-                >
-                  Patient Management
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform duration-300 ${mobilePatientOpen ? "rotate-180" : ""
-                      }`}
-                  />
-                </button>
-
-                <AnimatePresence>
-                  {mobilePatientOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="pl-4 flex flex-col space-y-2 text-gray-600"
+                      onClick={() => setMobilePatientOpen(!mobilePatientOpen)}
+                      className="flex justify-between items-center"
                     >
-                      <Link to="/patient-registration">Patient Registration</Link>
-                      <Link to="/patient-records">Patient Records</Link>
+                      Patient Management
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-300 ${mobilePatientOpen ? "rotate-180" : ""
+                          }`}
+                      />
+                    </button>
 
-                      {/* ✅ NEW LINKS */}
+                    <AnimatePresence>
+                      {mobilePatientOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="pl-4 flex flex-col space-y-2 text-gray-600"
+                        >
+                          <Link to="/patient-registration">Patient Registration</Link>
+                          <Link to="/patient-records">Patient Records</Link>
 
-                      <Link to="/admission">New Admission</Link>
-                      <Link to="/admission-listt">Admission List</Link>
-                      <Link to="/discharge/:id">Patient Discharge</Link>
-                      <Link to="/discharge-list">Discharge List</Link>
+                          {/* ✅ NEW LINKS */}
 
-                      <Link to="/prescriptions">Prescriptions & Medications</Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                          <Link to="/admission">New Admission</Link>
+                          <Link to="/admission-listt">Admission List</Link>
+                          <Link to="/discharge/:id">Patient Discharge</Link>
+                          <Link to="/discharge-list">Discharge List</Link>
+
+                          <Link to="/prescriptions">Prescriptions & Medications</Link>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                )}
                 {/* ================= SERVICES ================= */}
                 <button
                   onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
@@ -1211,7 +1231,22 @@ const Header = () => {
                 </AnimatePresence>
 
                 <Link to="/contact-us">Contact Us</Link>
-                <Link to="/login">Login</Link>
+                {!isLoggedIn ? (
+                  <Link to="/login" className="hover:text-teal-600">
+                    Login
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                      navigate("/");
+                      window.location.reload();
+                    }}
+                    className="hover:text-red-500"
+                  >
+                    Logout
+                  </button>
+                )}
 
                 <Link
                   to="/doctors"
@@ -1224,7 +1259,7 @@ const Header = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </header>
+      </header >
     </>
   );
 };
