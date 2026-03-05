@@ -30,18 +30,18 @@ import AboutUsPage from "./pages/AboutUsPage";
 import Doctors from "./pages/Doctors";
 import Departments from "./pages/Departments";
 import Appointment from "./pages/Appointment";
-// import ServicesSection from "./components/ServicesSection";
+import Services from "./pages/Services";
+import ServicesPage from "./pages/ServicesPage";
 import DepartmentDetails from "./pages/DepartmentDetails";
 import ContactUsPage from "./components/ContactUsPage";
-// import Services from "./components/Services";
-// import JobSeekerPage from "./components/JobSeekerPage";
-// import EmployeePage from "./components/EmployeePage";
-// import ClientPage from "./components/ClientPage";
-// import CareersPage from "./components/CareersPage";
-
-// import PortfolioPage from "./components/PortfolioPage";
-
-
+import AmbulancePage from "./pages/services/AmbulancePage";
+import PharmacyPage from "./pages/services/PharmacyPage";
+import EmrPage from "./pages/services/EmrPage";
+import LabTestsPage from "./pages/services/LabTestsPage";
+import InsurancePage from "./pages/services/InsurancePage";
+import SupportPage from "./pages/services/SupportPage";
+import EmergencyBanner from "./components/EmergencyBanner";
+import FloatingEmergency from "./components/FloatingEmergency";
 const PrivacyPolicyPage = () => {
   return (
     <div className="max-w-4xl mx-auto p-8">
@@ -66,7 +66,9 @@ function App() {
             path="/"
             element={
               <>
+                <EmergencyBanner />
                 <HeroSection />
+               
                 <WhyChooseUsSection />
                 <FeatureSection />
                 <DepartmentsServicesSection />
@@ -74,18 +76,9 @@ function App() {
                 <StatsSection />
                 <TestimonialsSection />
                 <CallToActionSection />
+                 <FloatingEmergency />
                 <FAQSection />
 
-
-
-
-
-                {/*
-                <AboutSection />
-                <ServicesSection />
-                <JobSection />
-                <ClientLogos />
-                <ContactSection />  */}
                 <button
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="fixed bottom-8 right-8 w-12 h-12 bg-teal-900 hover:bg-teal-500 text-white rounded-lg shadow-lg flex items-center justify-center"
@@ -95,6 +88,7 @@ function App() {
 
               </>
             }
+
           />
           <Route path="/contact-us" element={<ContactUsPage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -116,15 +110,19 @@ function App() {
           <Route path="/admission-list" element={<AdmissionList />} />
           <Route path="/discharge/:id" element={<Discharge />} />
           <Route path="/discharge-list" element={<DischargeList />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/services/ambulance" element={<AmbulancePage />} />
+          <Route path="/services/pharmacy" element={<PharmacyPage />} />
+          <Route path="/services/emr" element={<EmrPage />} />
+          <Route path="/services/lab-tests" element={<LabTestsPage />} />
+          <Route path="/services/insurance" element={<InsurancePage />} />
+          <Route path="/services/support" element={<SupportPage />} />
           <Route
             path="/departments/:departmentName"
             element={<DepartmentDetails />}
           />
+          <Route path="/services" element={<Services />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-
-          {/* <Route path="/services" element={<Services />} /> */}
-
-          {/* <Route path="/portfolio" element={<PortfolioPage />} />  */}
         </Routes>
 
         <Footer />

@@ -1002,7 +1002,9 @@ const Header = () => {
                 onMouseLeave={() => setIsServicesOpen(false)}
               >
                 <button className="flex items-center hover:text-teal-600">
-                  Services
+                  <Link to="/services" className="hover:text-teal-600">
+                    Services
+                  </Link>
                   <ChevronDown className={`ml-1 w-4 h-4 ${isServicesOpen ? "rotate-180" : ""}`} />
                 </button>
 
@@ -1014,10 +1016,29 @@ const Header = () => {
                       exit={{ opacity: 0, y: 10 }}
                       className="absolute left-0 mt-4 w-64 bg-white rounded-lg shadow-xl border"
                     >
-                      <Link to="/emr" className="block px-5 py-3 hover:bg-teal-50">EMR</Link>
-                      <Link to="/billing" className="block px-5 py-3 hover:bg-teal-50">Billing & Insurance</Link>
-                      <Link to="/inventory" className="block px-5 py-3 hover:bg-teal-50">Inventory & Pharmacy</Link>
-                      <Link to="/admin-dashboard" className="block px-5 py-3 hover:bg-teal-50">Admin Dashboard</Link>
+                      <Link to="/services/ambulance" className="block px-5 py-3 hover:bg-teal-50">
+                        Emergency Ambulance
+                      </Link>
+
+                      <Link to="/services/pharmacy" className="block px-5 py-3 hover:bg-teal-50">
+                        Pharmacy & Medicine Supply
+                      </Link>
+
+                      <Link to="/services/emr" className="block px-5 py-3 hover:bg-teal-50">
+                        Digital Medical Records
+                      </Link>
+
+                      <Link to="/services/lab-tests" className="block px-5 py-3 hover:bg-teal-50">
+                        Lab Test & Reports
+                      </Link>
+
+                      <Link to="/services/insurance" className="block px-5 py-3 hover:bg-teal-50">
+                        Insurance & Billing
+                      </Link>
+
+                      <Link to="/services/support" className="block px-5 py-3 hover:bg-teal-50">
+                        24/7 Patient Support
+                      </Link>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -1162,10 +1183,29 @@ const Header = () => {
                       exit={{ opacity: 0, height: 0 }}
                       className="pl-4 flex flex-col space-y-2 text-gray-600"
                     >
-                      <Link to="/emr">EMR</Link>
-                      <Link to="/billing">Billing & Insurance</Link>
-                      <Link to="/inventory">Inventory & Pharmacy</Link>
-                      <Link to="/admin-dashboard">Admin Dashboard</Link>
+                      <Link to="/services/ambulance">
+                        Emergency Ambulance
+                      </Link>
+
+                      <Link to="/services/pharmacy">
+                        Pharmacy & Medicine Supply
+                      </Link>
+
+                      <Link to="/services/emr">
+                        Digital Medical Records
+                      </Link>
+
+                      <Link to="/services/lab-tests">
+                        Lab Test & Reports
+                      </Link>
+
+                      <Link to="/services/insurance">
+                        Insurance & Billing
+                      </Link>
+
+                      <Link to="/services/support">
+                        24/7 Patient Support
+                      </Link>
                     </motion.div>
                   )}
                 </AnimatePresence>
