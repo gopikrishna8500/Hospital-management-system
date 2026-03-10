@@ -1094,7 +1094,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
             </button>
           </div>
         </div>
-
         {/* ================= MOBILE MENU ================= */}
         <AnimatePresence>
           {isMobileMenuOpen && (
@@ -1107,9 +1106,17 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
             >
               <nav className="flex flex-col space-y-4 font-semibold text-gray-800">
 
-                <Link to="/">Home</Link>
-                <Link to="/about">About Us</Link>
-                <Link to="/doctors">Doctors</Link>
+                <Link to="/" onClick={() => setIsMobileMenuOpen(false)}>
+                  Home
+                </Link>
+
+                <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}>
+                  About Us
+                </Link>
+
+                <Link to="/doctors" onClick={() => setIsMobileMenuOpen(false)}>
+                  Doctors
+                </Link>
 
                 {/* ================= DEPARTMENTS ================= */}
                 <button
@@ -1134,9 +1141,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
                       {departments.map((dept) => (
                         <Link
                           key={dept}
-                          to={`/departments/${dept
-                            .toLowerCase()
-                            .replace(/\s+/g, "-")}`}
+                          to={`/departments/${dept.toLowerCase().replace(/\s+/g, "-")}`}
+                          onClick={() => setIsMobileMenuOpen(false)}
                         >
                           {dept}
                         </Link>
@@ -1144,11 +1150,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
                     </motion.div>
                   )}
                 </AnimatePresence>
+
                 {isLoggedIn && (
                   <>
                     {/* ================= PATIENT MANAGEMENT ================= */}
                     <button
-
                       onClick={() => setMobilePatientOpen(!mobilePatientOpen)}
                       className="flex justify-between items-center"
                     >
@@ -1167,22 +1173,39 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
                           exit={{ opacity: 0, height: 0 }}
                           className="pl-4 flex flex-col space-y-2 text-gray-600"
                         >
-                          <Link to="/patient-registration">Patient Registration</Link>
-                          <Link to="/patient-records">Patient Records</Link>
+                          <Link to="/patient-registration" onClick={() => setIsMobileMenuOpen(false)}>
+                            Patient Registration
+                          </Link>
 
-                          {/* ✅ NEW LINKS */}
+                          <Link to="/patient-records" onClick={() => setIsMobileMenuOpen(false)}>
+                            Patient Records
+                          </Link>
 
-                          <Link to="/admission">New Admission</Link>
-                          <Link to="/admission-listt">Admission List</Link>
-                          <Link to="/discharge/:id">Patient Discharge</Link>
-                          <Link to="/discharge-list">Discharge List</Link>
+                          <Link to="/admission" onClick={() => setIsMobileMenuOpen(false)}>
+                            New Admission
+                          </Link>
 
-                          <Link to="/prescriptions">Prescriptions & Medications</Link>
+                          <Link to="/admission-listt" onClick={() => setIsMobileMenuOpen(false)}>
+                            Admission List
+                          </Link>
+
+                          <Link to="/discharge/:id" onClick={() => setIsMobileMenuOpen(false)}>
+                            Patient Discharge
+                          </Link>
+
+                          <Link to="/discharge-list" onClick={() => setIsMobileMenuOpen(false)}>
+                            Discharge List
+                          </Link>
+
+                          <Link to="/prescriptions" onClick={() => setIsMobileMenuOpen(false)}>
+                            Prescriptions & Medications
+                          </Link>
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </>
                 )}
+
                 {/* ================= SERVICES ================= */}
                 <button
                   onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
@@ -1203,36 +1226,39 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
                       exit={{ opacity: 0, height: 0 }}
                       className="pl-4 flex flex-col space-y-2 text-gray-600"
                     >
-                      <Link to="/services/ambulance">
+                      <Link to="/services/ambulance" onClick={() => setIsMobileMenuOpen(false)}>
                         Emergency Ambulance
                       </Link>
 
-                      <Link to="/services/pharmacy">
+                      <Link to="/services/pharmacy" onClick={() => setIsMobileMenuOpen(false)}>
                         Pharmacy & Medicine Supply
                       </Link>
 
-                      <Link to="/services/emr">
+                      <Link to="/services/emr" onClick={() => setIsMobileMenuOpen(false)}>
                         Digital Medical Records
                       </Link>
 
-                      <Link to="/services/lab-tests">
+                      <Link to="/services/lab-tests" onClick={() => setIsMobileMenuOpen(false)}>
                         Lab Test & Reports
                       </Link>
 
-                      <Link to="/services/insurance">
+                      <Link to="/services/insurance" onClick={() => setIsMobileMenuOpen(false)}>
                         Insurance & Billing
                       </Link>
 
-                      <Link to="/services/support">
+                      <Link to="/services/support" onClick={() => setIsMobileMenuOpen(false)}>
                         24/7 Patient Support
                       </Link>
                     </motion.div>
                   )}
                 </AnimatePresence>
 
-                <Link to="/contact-us">Contact Us</Link>
+                <Link to="/contact-us" onClick={() => setIsMobileMenuOpen(false)}>
+                  Contact Us
+                </Link>
+
                 {!isLoggedIn ? (
-                  <Link to="/login" className="hover:text-teal-600">
+                  <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
                     Login
                   </Link>
                 ) : (
@@ -1250,6 +1276,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
 
                 <Link
                   to="/doctors"
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="bg-teal-600 text-white text-center py-2 rounded-md mt-4"
                 >
                   Book Appointment
