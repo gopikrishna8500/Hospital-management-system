@@ -24,7 +24,7 @@ const AboutUs = () => {
     <div className="bg-gray-50 min-h-screen">
 
       {/* HERO SECTION */}
-      <section className="relative bg-gradient-to-r from-teal-700 to-teal-500 text-white pt-32 pb-24">
+      <section className="relative bg-linear-to-r from-teal-700 to-teal-500 text-white pt-32 pb-24">
 
         <div className="max-w-6xl mx-auto px-6 text-center">
 
