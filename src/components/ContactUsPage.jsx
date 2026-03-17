@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Phone, Mail, Clock, MapPin, ArrowUp, Ambulance } from "lucide-react";
-
+import { motion } from "framer-motion";
 const ContactUsPage = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -30,9 +30,51 @@ const ContactUsPage = () => {
         <Ambulance className="inline mr-2" size={18} />
         24/7 Emergency Services | Call: +1 (800) 911-0000
       </div>
+      <section className="relative bg-linear-to-r bg-teal-700 text-white pt-10 pb-24">
+
+        <div className="max-w-6xl mx-auto px-6 text-center">
+
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold mb-6"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            Contact & Patient Services
+
+          </motion.h1>
+
+          <motion.p
+            className="max-w-3xl mx-auto text-lg text-teal-200"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            Our care team is available to assist you with appointments,
+          medical concerns, insurance inquiries, and patient support.
+          </motion.p>
+
+        </div>
+
+        {/* Bottom Shape */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+          <svg
+            className="relative block w-full h-16"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 320"
+          >
+            <path
+              fill="#f9fafb"
+              fillOpacity="1"
+              d="M0,192L80,176C160,160,320,128,480,138.7C640,149,800,203,960,218.7C1120,235,1280,213,1360,202.7L1440,192L1440,320L0,320Z"
+            ></path>
+          </svg>
+        </div>
+
+      </section>
 
       {/* Hero */}
-      <div className="bg-teal-900 text-white py-20 text-center">
+      {/* <div className="bg-teal-900 text-white py-20 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Contact & Patient Services
         </h1>
@@ -40,7 +82,7 @@ const ContactUsPage = () => {
           Our care team is available to assist you with appointments,
           medical concerns, insurance inquiries, and patient support.
         </p>
-      </div>
+      </div> */}
 
       {/* Main Contact Grid */}
       <div className="py-16 container mx-auto px-6 max-w-6xl">

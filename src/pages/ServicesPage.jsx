@@ -1,6 +1,6 @@
 import React from "react";
 import { Ambulance, Pill, FileText, Microscope, CreditCard, Headphones } from "lucide-react";
-
+import { motion } from "framer-motion";
 const services = [
   {
     icon: <Ambulance size={40} className="text-red-500" />,
@@ -43,15 +43,70 @@ const services = [
 const ServicesPage = () => {
   return (
     <div className="bg-gray-50 min-h-screen">
+      <section className="relative bg-linear-to-r bg-teal-700 text-white pt-10 pb-24">
+
+        <div className="max-w-6xl mx-auto px-6 text-center">
+
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold mb-6"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            Our Hospital Services
+
+          </motion.h1>
+
+          <motion.p
+            className="max-w-3xl mx-auto text-lg text-white"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            We provide world-class healthcare services with modern technology and
+            professional medical staff to ensure the best treatment for patients.
+          </motion.p>
+
+        </div>
+
+        {/* Bottom Shape */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+          <svg
+            className="relative block w-full h-16"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 320"
+          >
+            <path
+              fill="#f9fafb"
+              fillOpacity="1"
+              d="M0,192L80,176C160,160,320,128,480,138.7C640,149,800,203,960,218.7C1120,235,1280,213,1360,202.7L1440,192L1440,320L0,320Z"
+            ></path>
+          </svg>
+        </div>
+
+      </section>
 
       {/* HERO SECTION */}
-      <div className="bg-teal-700 text-white py-16 text-center">
+      {/* <div className="bg-teal-700 text-white py-16 text-center">
         <h1 className="text-4xl font-bold mb-4">Our Hospital Services</h1>
         <p className="text-lg max-w-2xl mx-auto">
           We provide world-class healthcare services with modern technology and
           professional medical staff to ensure the best treatment for patients.
         </p>
-      </div>
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+          <svg
+            className="relative block w-full h-16"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 320"
+          >
+            <path
+              fill="#f9fafb"
+              fillOpacity="1"
+              d="M0,192L80,176C160,160,320,128,480,138.7C640,149,800,203,960,218.7C1120,235,1280,213,1360,202.7L1440,192L1440,320L0,320Z"
+            ></path>
+          </svg>
+        </div>
+      </div> */}
 
       {/* SERVICES GRID */}
       <div className="container mx-auto px-6 py-16">

@@ -7,7 +7,7 @@ import {
   ShieldCheck,
   Headset
 } from "lucide-react";
-
+import { motion } from "framer-motion";
 const services = [
   {
     title: "Emergency Ambulance",
