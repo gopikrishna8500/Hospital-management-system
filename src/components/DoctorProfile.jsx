@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
 import { doctorsData } from "../pages/DoctorCard";
-
+import profileImage from "../assets/profile.png";
 const DoctorProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -21,9 +21,14 @@ const DoctorProfile = () => {
     <div className="bg-gray-50 min-h-screen p-8">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-8 flex flex-col md:flex-row gap-8">
         {/* Doctor Photo */}
-        <div className="shrink-0">
+        {/* <div className="shrink-0">
           <div className="w-48 h-48 bg-gray-300 rounded-full"></div>
-        </div>
+        </div> */}
+          <img
+        src={profileImage}
+        alt="Doctor"
+        className="w-24 h-24 rounded-full object-cover border-4 border-teal-500 mx-auto mb-4"
+      />
 
         {/* Doctor Details */}
         <div className="flex-1">
