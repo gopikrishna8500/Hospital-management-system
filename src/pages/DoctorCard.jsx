@@ -28,7 +28,7 @@ const DoctorCard = ({ doctor }) => {
       <img
         src={profileImage}
         alt="Doctor"
-        className="w-24 h-24 rounded-full object-cover border-4 border-teal-500 mx-auto mb-4"
+        className="w-24 h-24 rounded-full  mx-auto mb-4"
       />
       {/* <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-4"></div> */}
 

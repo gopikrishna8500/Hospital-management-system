@@ -42,6 +42,11 @@ import InsurancePage from "./pages/services/InsurancePage";
 import SupportPage from "./pages/services/SupportPage";
 import EmergencyBanner from "./components/EmergencyBanner";
 import FloatingEmergency from "./components/FloatingEmergency";
+import DoctorLogin from "./pages/DoctorLogin";
+import StaffLogin from "./pages/StaffLogin";
+import DoctorDashboard from "./pages/DoctorDashboard";
+import StaffDashboard from "./pages/StaffDashboard";
+
 const PrivacyPolicyPage = () => {
   return (
     <div className="max-w-4xl mx-auto p-8">
@@ -68,7 +73,7 @@ function App() {
               <>
                 <EmergencyBanner />
                 <HeroSection />
-               
+
                 <WhyChooseUsSection />
                 <FeatureSection />
                 <DepartmentsServicesSection />
@@ -76,7 +81,7 @@ function App() {
                 <StatsSection />
                 <TestimonialsSection />
                 <CallToActionSection />
-                 <FloatingEmergency />
+                <FloatingEmergency />
                 <FAQSection />
 
                 <button
@@ -123,6 +128,11 @@ function App() {
           />
           <Route path="/services" element={<Services />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/doctor-login" element={<DoctorLogin />} />
+          <Route path="/staff-login" element={<StaffLogin />} />
+
+          <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+          <Route path="/staff-dashboard" element={<StaffDashboard />} />
         </Routes>
 
         <Footer />

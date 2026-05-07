@@ -109,9 +109,6 @@
 // };
 
 // export default LoginPage;
-
-
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Lock, User, ShieldCheck } from "lucide-react";
@@ -136,69 +133,91 @@ const LoginPage = () => {
     try {
       setLoading(true);
 
+      // ✅ LOGIN API
       const res = await axios.post(
         "http://localhost:5000/api/auth/login",
         {
           email,
           password,
+          role, // ✅ SEND ROLE
         }
       );
 
-      // Store token & user
+      // ✅ STORE TOKEN
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      localStorage.setItem("role", res.data.user.role);
+
+      // ✅ STORE USER
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data.user)
+      );
+
+      // ✅ STORE ROLE
+      localStorage.setItem(
+        "role",
+        res.data.user.role
+      );
 
       alert("Login successful!");
 
-      // Redirect based on role
+      // ✅ ROLE CHECK
       if (res.data.user.role === "admin") {
         navigate("/admin-dashboard");
+
       } else if (res.data.user.role === "doctor") {
         navigate("/doctor-dashboard");
+
       } else if (res.data.user.role === "staff") {
         navigate("/staff-dashboard");
+
       } else {
         navigate("/");
       }
 
     } catch (error) {
       console.error(error);
+
       alert(
-        error.response?.data?.message || "Invalid email or password"
+        error.response?.data?.message ||
+        "Invalid email or password"
       );
+
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-teal-950 via-teal-900 to-teal-800 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-950 via-teal-900 to-teal-800 px-4">
+      
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
-        
-        {/* Logo / Title */}
+
+        {/* HEADER */}
         <div className="text-center mb-8">
-          <ShieldCheck className="w-12 h-12 text-teal-600 mx-auto mb-3" />
-          <h2 className="text-2xl font-bold text-gray-800">
+          <ShieldCheck className="w-14 h-14 text-teal-600 mx-auto mb-4" />
+
+          <h2 className="text-3xl font-bold text-gray-800">
             MediTrack Login
           </h2>
-          <p className="text-gray-500 text-sm">
-            Secure Hospital Management Access
+
+          <p className="text-gray-500 mt-2">
+            Hospital Management System
           </p>
         </div>
 
-        {/* Login Form */}
+        {/* FORM */}
         <form onSubmit={handleLogin} className="space-y-5">
 
-          {/* Role Selection (Optional UI Only) */}
+          {/* ROLE */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Select Role
             </label>
+
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
             >
               <option value="admin">Admin</option>
               <option value="doctor">Doctor</option>
@@ -206,49 +225,48 @@ const LoginPage = () => {
             </select>
           </div>
 
-          {/* Email */}
+          {/* EMAIL */}
           <div className="relative">
-            <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+            <User className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+
             <input
               type="email"
-              placeholder="Email Address"
+              placeholder="Enter Email Address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-md pl-10 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border border-gray-300 rounded-lg pl-11 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
 
-          {/* Password */}
+          {/* PASSWORD */}
           <div className="relative">
-            <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+            <Lock className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-md pl-10 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full border border-gray-300 rounded-lg pl-11 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
 
-          {/* Login Button */}
+          {/* BUTTON */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-teal-600 hover:bg-teal-500 text-white py-2 rounded-md font-semibold shadow-md transition transform hover:scale-105 disabled:opacity-50"
+            className="w-full bg-teal-600 hover:bg-teal-500 text-white py-3 rounded-lg font-semibold shadow-lg transition-all duration-300 hover:scale-105 disabled:opacity-50"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        {/* Extra Links */}
-        <div className="text-center mt-6 text-sm">
-          <p className="text-gray-500">
-            Forgot password?{" "}
-            <span className="text-teal-600 cursor-pointer hover:underline">
-              Reset here
-            </span>
+        {/* FOOTER */}
+        <div className="text-center mt-6">
+          <p className="text-gray-500 text-sm">
+            Secure Access for Hospital Staff
           </p>
         </div>
       </div>

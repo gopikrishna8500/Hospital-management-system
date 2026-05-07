@@ -10,8 +10,9 @@ const fs = require("fs");
 dotenv.config();
 
 const pool = require("./config/db");
-const authenticateToken = require("./middleware/authMiddleware");
-
+const {
+  verifyToken: authenticateToken,
+} = require("./middleware/auth.middleware");
 const dashboardRoutes = require("./modules/dashboard/dashboard.routes");
 const authRoutes = require("./modules/auth/auth.routes");
 const patientsRoutes = require("./modules/patients/patients.routes");
