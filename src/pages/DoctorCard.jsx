@@ -1,7 +1,7 @@
 import React from "react";
 import { Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import profileImage from "../assets/profile.png";
 // Exporting doctorsData for reuse in Doctors.jsx
 export const doctorsData = [
   { id: 1, name: "Dr. John Smith", specialization: "General Medicine", experience: "12 Years", availability: "Available", rating: 5 },
@@ -24,7 +24,13 @@ const DoctorCard = ({ doctor }) => {
   return (
     <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center">
       {/* Doctor Photo */}
-      <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-4"></div>
+         {/* Doctor Photo */}
+      <img
+        src={profileImage}
+        alt="Doctor"
+        className="w-24 h-24 rounded-full object-cover border-4 border-teal-500 mx-auto mb-4"
+      />
+      {/* <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-4"></div> */}
 
       {/* Doctor Info */}
       <h3 className="text-xl font-semibold">{doctor.name}</h3>
