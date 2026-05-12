@@ -7,7 +7,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { motion } from "framer-motion";
-
+import profileImage from "../assets/profile.png";
 const AboutUs = () => {
 
   const fadeUp = {
@@ -285,65 +285,72 @@ const AboutUs = () => {
 
         </motion.div>
 
-     {/* TESTIMONIALS */}
-         <motion.div
-        className="mb-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-      >
-        <h2 className="text-3xl font-bold text-teal-600 text-center mb-10">
-          What Professionals Say
-        </h2>
+        {/* TESTIMONIALS */}
+        <motion.div
+          className="mb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+        >
+          <h2 className="text-3xl font-bold text-teal-600 text-center mb-10">
+            What Professionals Say
+          </h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {[
-            { text: "“This system streamlined our hospital operations and improved workflow efficiency significantly.”", name: "Dr. Maria Thompson", role: "Senior Physician" },
-            { text: "“User-friendly interface and powerful analytics — exactly what modern hospitals need.”", name: "James Robertson", role: "Hospital Administrator" }
-          ].map((t, i) => (
-            <motion.div
-              key={i}
-              className="bg-white p-6 rounded-xl shadow-md"
-              whileHover={{ scale: 1.03 }}
-            >
-              <p className="text-gray-600 mb-4">{t.text}</p>
-              <h4 className="font-semibold">{t.name}</h4>
-              <p className="text-sm text-gray-500">{t.role}</p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              { text: "“This system streamlined our hospital operations and improved workflow efficiency significantly.”", name: "Dr. Maria Thompson", role: "Senior Physician" },
+              { text: "“User-friendly interface and powerful analytics — exactly what modern hospitals need.”", name: "James Robertson", role: "Hospital Administrator" }
+            ].map((t, i) => (
+              <motion.div
+                key={i}
+                className="bg-white p-6 rounded-xl shadow-md"
+                whileHover={{ scale: 1.03 }}
+              >
+                <p className="text-gray-600 mb-4">{t.text}</p>
+                <h4 className="font-semibold">{t.name}</h4>
+                <p className="text-sm text-gray-500">{t.role}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
-      {/* TEAM SECTION */}
-       <motion.div
-        className="text-center mb-20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-      >
-        <h2 className="text-3xl font-bold text-teal-600 mb-6">Our Leadership</h2>
+        {/* TEAM SECTION */}
+        <motion.div
+          className="text-center mb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+        >
+          <h2 className="text-3xl font-bold text-teal-600 mb-6">
+            Our Leadership
+          </h2>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {[
-            { name: "Dr. Sarah Williams", role: "Chief Medical Officer" },
-            { name: "Michael Johnson", role: "Hospital Administrator" },
-            { name: "Emily Carter", role: "Lead Software Engineer" }
-          ].map((member, i) => (
-            <motion.div
-              key={i}
-              className="bg-white p-6 rounded-xl shadow-md"
-              whileHover={{ scale: 1.03 }}
-            >
-              <div className="w-20 h-20 bg-gray-300 rounded-full mx-auto mb-4"></div>
-              <h4 className="font-semibold">{member.name}</h4>
-              <p className="text-sm text-gray-600">{member.role}</p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {[
+              { name: "Dr. Sarah Williams", role: "Chief Medical Officer" },
+              { name: "Michael Johnson", role: "Hospital Administrator" },
+              { name: "Emily Carter", role: "Lead Software Engineer" }
+            ].map((member, i) => (
+              <motion.div
+                key={i}
+                className="bg-white p-6 rounded-xl shadow-md"
+                whileHover={{ scale: 1.03 }}
+              >
+                {/* ✅ IMAGE ADDED HERE */}
+                <img
+                  src={profileImage}
+                  alt={member.name}
+                  className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                />
 
+                <h4 className="font-semibold">{member.name}</h4>
+                <p className="text-sm text-gray-600">{member.role}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
         {/* FINAL CTA */}
         <motion.div
           className="text-center bg-teal-600 text-white py-12 rounded-xl"
