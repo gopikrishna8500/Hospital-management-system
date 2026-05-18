@@ -203,7 +203,7 @@ const PatientRegistration = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/patients",
+        "https://hospital-management-system-4-kceq.onrender.com/api/patients",
         form,
         {
           headers: {

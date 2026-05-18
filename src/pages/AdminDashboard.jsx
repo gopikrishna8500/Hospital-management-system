@@ -30,7 +30,7 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         const patientRes = await axios.get(
-          "http://localhost:5000/api/patients",
+          "https://hospital-management-system-4-kceq.onrender.com/api/patients",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
         setPatients(patientRes.data.data || []);
 
         // OPTIONAL: If you create appointments API later
-        // const apptRes = await axios.get("http://localhost:5000/api/appointments", { headers: { Authorization: `Bearer ${token}` }});
+        // const apptRes = await axios.get("https://hospital-management-system-4-kceq.onrender.com/api/appointments", { headers: { Authorization: `Bearer ${token}` }});
         // setAppointments(apptRes.data.data || []);
 
       } catch (error) {

@@ -53,7 +53,7 @@ const StaffDashboard = () => {
     const fetchPatients = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/patients",
+          "https://hospital-management-system-4-kceq.onrender.com/api/patients",
           {
             headers: {
               Authorization: `Bearer ${token}`,

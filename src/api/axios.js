@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://hospital-management-system-4-kceq.onrender.com/api",
 });
 
 API.interceptors.request.use((req) => {
