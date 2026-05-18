@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
-
+const appointmentRoutes = require("./routes/appointments.routes");
 dotenv.config();
 
 const pool = require("./config/db");
@@ -27,7 +27,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-
+app.use("/api/appointments", appointmentRoutes);
 /* =========================
    ENSURE UPLOADS FOLDER EXISTS
 ========================= */

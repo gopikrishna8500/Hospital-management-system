@@ -981,17 +981,19 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
                         <Link to="/admission-list" className="block px-5 py-3 hover:bg-teal-50">
                           Admission List
                         </Link>
-
-                        <Link to="/discharge" className="block px-5 py-3 hover:bg-teal-50">
+                        <Link to="/discharge-form" className="block px-5 py-3 hover:bg-teal-50">
                           Patient Discharge
+                        </Link>
+                        <Link to="/discharge" className="block px-5 py-3 hover:bg-teal-50">
+                          Discharge Details
                         </Link>
                         <Link to="/discharge-list" className="block px-5 py-3 hover:bg-teal-50">
                           Discharge List
                         </Link>
 
-                        <Link to="/prescriptions" className="block px-5 py-3 hover:bg-teal-50">
+                        {/* <Link to="/prescriptions" className="block px-5 py-3 hover:bg-teal-50">
                           Prescriptions & Medications
-                        </Link>
+                        </Link> */}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -1072,7 +1074,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
             {/* RIGHT BUTTONS */}
             <div className="hidden lg:flex items-center space-x-4">
               <Link
-                to="/doctors"
+                to="appointments/form"
                 className="bg-linear-to-r from-teal-600 to-teal-700 text-white px-6 py-2.5 rounded-md shadow-lg transition hover:scale-105"
               >
                 Book Appointment
@@ -1188,18 +1190,19 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
                           <Link to="/admission-listt" onClick={() => setIsMobileMenuOpen(false)}>
                             Admission List
                           </Link>
-
-                          <Link to="/discharge/:id" onClick={() => setIsMobileMenuOpen(false)}>
+                          <Link to="/discharge-form" onClick={() => setIsMobileMenuOpen(false)}>
                             Patient Discharge
                           </Link>
 
+                          <Link to="/discharge" onClick={() => setIsMobileMenuOpen(false)}>
+                            Discharge Details
+                          </Link>
                           <Link to="/discharge-list" onClick={() => setIsMobileMenuOpen(false)}>
-                            Discharge List
+                            Discharge List 
                           </Link>
-
-                          <Link to="/prescriptions" onClick={() => setIsMobileMenuOpen(false)}>
+                          {/* <Link to="/prescriptions" onClick={() => setIsMobileMenuOpen(false)}>
                             Prescriptions & Medications
-                          </Link>
+                          </Link> */}
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -1275,7 +1278,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
                 )}
 
                 <Link
-                  to="/doctors"
+                  to="/appointments/form"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="bg-teal-600 text-white text-center py-2 rounded-md mt-4"
                 >

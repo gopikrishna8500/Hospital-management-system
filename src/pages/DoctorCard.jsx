@@ -66,7 +66,7 @@ const DoctorCard = ({ doctor }) => {
           View Profile
         </button>
         <button
-          onClick={() => navigate(`/appointments/book/${doctor.id}`)}
+          onClick={() => navigate(`/appointmentsform/book/${doctor.id}`)}
           className="flex-1 border border-teal-600 text-teal-600 py-2 rounded-md hover:bg-teal-50 transition"
         >
           Book Appointment

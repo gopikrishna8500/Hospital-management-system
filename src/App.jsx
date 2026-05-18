@@ -7,6 +7,8 @@ import CallToActionSection from "./components/CallToActionSection";
 import DepartmentsServicesSection from "./components/DepartmentsServicesSection";
 import StatsSection from "./components/StatsSection";
 import TestimonialsSection from "./components/TestimonialsSection";
+import AppointmentForm from "./pages/AppointmentForm";
+import Appointments from "./pages/Appointments";
 import WhyChooseUsSection from "./components/WhyChooseUsSection";
 import HowItWorksSection from "./components/HowItWorksSection";
 import FAQSection from "./components/FAQSection";
@@ -19,8 +21,9 @@ import AdminDashboard from "./pages/AdminDashboard";
 import PatientRegistration from "./pages/PatientRegistration";
 import PatientRecords from "./pages/PatientRecords";
 import MedicalReports from "./pages/MedicalReports";
-import Appointments from "./pages/Appointments";
+import SupportPage from "./pages/services/SupportPage";
 import Discharge from "./pages/Discharge";
+import DischargeForm from "./components/DischargeForm";
 import DischargeList from "./pages/DischargeList";
 import Admission from "./pages/Admission";
 import AdmissionList from "./pages/AdmissionList";
@@ -39,7 +42,6 @@ import PharmacyPage from "./pages/services/PharmacyPage";
 import EmrPage from "./pages/services/EmrPage";
 import LabTestsPage from "./pages/services/LabTestsPage";
 import InsurancePage from "./pages/services/InsurancePage";
-import SupportPage from "./pages/services/SupportPage";
 import EmergencyBanner from "./components/EmergencyBanner";
 import FloatingEmergency from "./components/FloatingEmergency";
 import DoctorLogin from "./pages/DoctorLogin";
@@ -98,11 +100,12 @@ function App() {
           <Route path="/contact-us" element={<ContactUsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route element={<DashboardLayout />}>
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
-            <Route path="/patient-registration" element={<PatientRegistration />} />
-            <Route path="/patient-records" element={<PatientRecords />} />
+            <Route path="admin-dashboard" element={<AdminDashboard />} />
+            <Route path="patient-registration" element={<PatientRegistration />} />
+            <Route path="patient-records" element={<PatientRecords />} />
             <Route path="reports" element={<MedicalReports />} />
             <Route path="appointments" element={<Appointments />} />
+            <Route path="appointments/form" element={<AppointmentForm />} />
             <Route path="beds" element={<BedManagement />} />
             <Route path="billing" element={<Billing />} />
           </Route>
@@ -113,8 +116,9 @@ function App() {
           <Route path="/doctors/:id" element={<DoctorProfile />} />
           <Route path="/admission" element={<Admission />} />
           <Route path="/admission-list" element={<AdmissionList />} />
-          <Route path="/discharge/:id" element={<Discharge />} />
+          <Route path="/discharge" element={<Discharge />} />
           <Route path="/discharge-list" element={<DischargeList />} />
+          <Route path="/discharge-form" element={<DischargeForm />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/services/ambulance" element={<AmbulancePage />} />
           <Route path="/services/pharmacy" element={<PharmacyPage />} />
@@ -126,7 +130,6 @@ function App() {
             path="/departments/:departmentName"
             element={<DepartmentDetails />}
           />
-          <Route path="/services" element={<Services />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/doctor-login" element={<DoctorLogin />} />
           <Route path="/staff-login" element={<StaffLogin />} />
