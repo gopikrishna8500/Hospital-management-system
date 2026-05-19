@@ -7,23 +7,31 @@ const pool = require("../config/db");
 ========================= */
 router.post("/", async (req, res) => {
   try {
-    const { patient_id, patient_name, items, total_amount } = req.body;
+    const { patient_id, patient_name, amount } = req.body;
+
+    if (!patient_name || !amount) {
+      return res.status(400).json({
+        message: "Patient name and amount required",
+      });
+    }
 
     const result = await pool.query(
-      `INSERT INTO billing (patient_id, patient_name, items, total_amount)
-       VALUES ($1,$2,$3,$4)
+      `INSERT INTO billing (patient_id, patient_name, amount)
+       VALUES ($1, $2, $3)
        RETURNING *`,
-      [patient_id, patient_name, items, total_amount]
+      [patient_id || null, patient_name, amount]
     );
 
     res.json({
-      message: "Invoice saved ✅",
+      message: "Invoice created successfully ✅",
       data: result.rows[0],
     });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Billing failed ❌" });
+    console.error("BILLING ERROR:", err);
+    res.status(500).json({
+      message: err.message || "Billing failed ❌",
+    });
   }
 });
 
@@ -39,26 +47,10 @@ router.get("/", async (req, res) => {
     res.json({ data: result.rows });
 
   } catch (err) {
-    res.status(500).json({ message: "Failed to fetch bills" });
-  }
-});
-
-/* =========================
-   UPDATE PAYMENT STATUS
-========================= */
-router.put("/:id", async (req, res) => {
-  try {
-    const { status } = req.body;
-
-    const result = await pool.query(
-      "UPDATE billing SET status=$1 WHERE id=$2 RETURNING *",
-      [status, req.params.id]
-    );
-
-    res.json({ data: result.rows[0] });
-
-  } catch (err) {
-    res.status(500).json({ message: "Update failed" });
+    console.error("FETCH BILL ERROR:", err);
+    res.status(500).json({
+      message: "Failed to fetch bills",
+    });
   }
 });
 
