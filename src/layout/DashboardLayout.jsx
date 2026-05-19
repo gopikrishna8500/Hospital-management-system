@@ -88,7 +88,7 @@ const DashboardLayout = () => {
           open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
-        <h2 className="text-2xl font-bold tracking-wide">RunsEra MediTrack</h2>
+        <h2 className="text-2xl font-bold tracking-wide">IdealPathSoftwareSolutions MediTrack</h2>
 
         <nav className="space-y-3">
           {menuItems.map((item) => (

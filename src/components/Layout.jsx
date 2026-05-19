@@ -11,7 +11,7 @@ const Layout = () => {
       {/* Navbar */}
       <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-teal-600">
-          RunsEra MediTrack
+          IdealPathSoftwareSolutions MediTrack
         </h1>
 
         {/* Desktop Links */}

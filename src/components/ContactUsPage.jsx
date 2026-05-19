@@ -99,7 +99,7 @@ const ContactUsPage = () => {
 
               <div className="space-y-4 text-gray-700">
                 <p><Phone className="inline mr-2 text-teal-700" size={18}/> Main Reception: +1 (800) 555-0100</p>
-                <p><Mail className="inline mr-2 text-teal-700" size={18}/> info@runserahospital.com</p>
+                <p><Mail className="inline mr-2 text-teal-700" size={18}/> info@IdealPathSoftwareSolutionshospital.com</p>
                 <p><MapPin className="inline mr-2 text-teal-700" size={18}/> 1200 Healthcare Blvd, New York, NY 10001</p>
               </div>
             </div>
@@ -139,7 +139,7 @@ const ContactUsPage = () => {
 
               <p className="text-gray-700">
                 📞 +1 (800) 555-0200 <br/>
-                ✉ billing@runserahospital.com
+                ✉ billing@IdealPathSoftwareSolutionshospital.com
               </p>
             </div>
 

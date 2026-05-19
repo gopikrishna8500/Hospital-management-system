@@ -27,7 +27,7 @@ const Footer = () => {
           {/* About MediTrack */}
           <div>
             <h3 className="text-xl font-bold text-white mb-6 border-b border-teal-700 pb-2">
-              RunsEra MediTrack
+              IdealPathSoftwareSolutions MediTrack
             </h3>
             <p className="text-sm leading-relaxed text-gray-300">
               A secure and intelligent Hospital Management System designed to
@@ -81,7 +81,7 @@ const Footer = () => {
               </p>
               <p className="flex items-center">
                 <Mail className="w-4 h-4 mr-2 text-teal-300" />
-                support@runserameditrack.com
+                support@IdealPathSoftwareSolutionsmeditrack.com
               </p>
             </div>
 
@@ -135,7 +135,7 @@ const Footer = () => {
           </div>
 
           <div className="text-sm">
-            © 2026 <span className="text-teal-400 font-semibold">RunsEra MediTrack</span>. 
+            © 2026 <span className="text-teal-400 font-semibold">IdealPathSoftwareSolutions MediTrack</span>. 
             All Rights Reserved.
           </div>
 

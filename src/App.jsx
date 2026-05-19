@@ -33,7 +33,6 @@ import AboutUsPage from "./pages/AboutUsPage";
 import Doctors from "./pages/Doctors";
 import Departments from "./pages/Departments";
 import Appointment from "./pages/Appointment";
-import Services from "./pages/Services";
 import ServicesPage from "./pages/ServicesPage";
 import DepartmentDetails from "./pages/DepartmentDetails";
 import ContactUsPage from "./components/ContactUsPage";
@@ -54,7 +53,7 @@ const PrivacyPolicyPage = () => {
     <div className="max-w-4xl mx-auto p-8">
       <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
       <p className="text-gray-700">
-        This is the Privacy Policy page. You can replace this content with your actual privacy policy information.
+        This is the Privacy Policy page.
       </p>
     </div>
   );
@@ -64,85 +63,77 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="">
-        <Header />
 
+      <Header />
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <EmergencyBanner />
-                <HeroSection />
+      <Routes>
 
-                <WhyChooseUsSection />
-                <FeatureSection />
-                <DepartmentsServicesSection />
-                <HowItWorksSection />
-                <StatsSection />
-                <TestimonialsSection />
-                <CallToActionSection />
-                <FloatingEmergency />
-                <FAQSection />
+        {/* ✅ HOME */}
+        <Route
+          path="/"
+          element={
+            <>
+              <EmergencyBanner />
+              <HeroSection />
+              <WhyChooseUsSection />
+              <FeatureSection />
+              <DepartmentsServicesSection />
+              <HowItWorksSection />
+              <StatsSection />
+              <TestimonialsSection />
+              <CallToActionSection />
+              <FloatingEmergency />
+              <FAQSection />
+            </>
+          }
+        />
 
-                <button
-                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="fixed bottom-8 right-8 w-12 h-12 bg-teal-900 hover:bg-teal-500 text-white rounded-lg shadow-lg flex items-center justify-center"
-                >
-                  ↑
-                </button>
+        {/* ✅ PUBLIC APPOINTMENT PAGE (IMPORTANT FIX) */}
+        <Route path="/appointments/form" element={<AppointmentForm />} />
 
-              </>
-            }
+        {/* OTHER PUBLIC ROUTES */}
+        <Route path="/contact-us" element={<ContactUsPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/about" element={<AboutUsPage />} />
+        <Route path="/doctors" element={<Doctors />} />
+        <Route path="/appointments/book/:id" element={<Appointment />} />
+        <Route path="/departments" element={<Departments />} />
+        <Route path="/doctors/:id" element={<DoctorProfile />} />
+        <Route path="/admission" element={<Admission />} />
+        <Route path="/admission-list" element={<AdmissionList />} />
+        <Route path="/discharge" element={<Discharge />} />
+        <Route path="/discharge-list" element={<DischargeList />} />
+        <Route path="/discharge-form" element={<DischargeForm />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/services/ambulance" element={<AmbulancePage />} />
+        <Route path="/services/pharmacy" element={<PharmacyPage />} />
+        <Route path="/services/emr" element={<EmrPage />} />
+        <Route path="/services/lab-tests" element={<LabTestsPage />} />
+        <Route path="/services/insurance" element={<InsurancePage />} />
+        <Route path="/services/support" element={<SupportPage />} />
+        <Route path="/departments/:departmentName" element={<DepartmentDetails />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/doctor-login" element={<DoctorLogin />} />
+        <Route path="/staff-login" element={<StaffLogin />} />
+        <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
+        <Route path="/staff-dashboard" element={<StaffDashboard />} />
 
-          />
-          <Route path="/contact-us" element={<ContactUsPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route element={<DashboardLayout />}>
-            <Route path="admin-dashboard" element={<AdminDashboard />} />
-            <Route path="patient-registration" element={<PatientRegistration />} />
-            <Route path="patient-records" element={<PatientRecords />} />
-            <Route path="reports" element={<MedicalReports />} />
-            <Route path="appointments" element={<Appointments />} />
-            <Route path="appointments/form" element={<AppointmentForm />} />
-            <Route path="beds" element={<BedManagement />} />
-            <Route path="billing" element={<Billing />} />
-          </Route>
-          <Route path="/about" element={<AboutUsPage />} />
-          <Route path="/doctors" element={<Doctors />} />
-          <Route path="/appointments/book/:id" element={<Appointment />} />
-          <Route path="/departments" element={<Departments />} />
-          <Route path="/doctors/:id" element={<DoctorProfile />} />
-          <Route path="/admission" element={<Admission />} />
-          <Route path="/admission-list" element={<AdmissionList />} />
-          <Route path="/discharge" element={<Discharge />} />
-          <Route path="/discharge-list" element={<DischargeList />} />
-          <Route path="/discharge-form" element={<DischargeForm />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/services/ambulance" element={<AmbulancePage />} />
-          <Route path="/services/pharmacy" element={<PharmacyPage />} />
-          <Route path="/services/emr" element={<EmrPage />} />
-          <Route path="/services/lab-tests" element={<LabTestsPage />} />
-          <Route path="/services/insurance" element={<InsurancePage />} />
-          <Route path="/services/support" element={<SupportPage />} />
-          <Route
-            path="/departments/:departmentName"
-            element={<DepartmentDetails />}
-          />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="/doctor-login" element={<DoctorLogin />} />
-          <Route path="/staff-login" element={<StaffLogin />} />
+        {/* ❌ PROTECTED / DASHBOARD ROUTES */}
+        <Route element={<DashboardLayout />}>
+          <Route path="admin-dashboard" element={<AdminDashboard />} />
+          <Route path="patient-registration" element={<PatientRegistration />} />
+          <Route path="patient-records" element={<PatientRecords />} />
+          <Route path="reports" element={<MedicalReports />} />
+          <Route path="appointments" element={<Appointments />} />
+          <Route path="beds" element={<BedManagement />} />
+          <Route path="billing" element={<Billing />} />
+        </Route>
 
-          <Route path="/doctor-dashboard" element={<DoctorDashboard />} />
-          <Route path="/staff-dashboard" element={<StaffDashboard />} />
-        </Routes>
+      </Routes>
 
-        <Footer />
-      </div>
+      <Footer />
     </Router>
   );
 }
 
 export default App;
-

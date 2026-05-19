@@ -132,7 +132,7 @@ app.get(
 ========================= */
 
 app.get("/", (req, res) => {
-  res.send("🚀 RunsEra MediTrack Backend Running");
+  res.send("🚀 IdealPathSoftwareSolutions MediTrack Backend Running");
 });
 
 /* =========================
