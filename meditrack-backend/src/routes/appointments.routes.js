@@ -63,110 +63,33 @@ router.post("/", async (req, res) => {
     );
 
     /* =========================
-       PROFESSIONAL EMAIL TEMPLATE
+       EMAIL TEMPLATE
     ============================ */
     const patientEmailHTML = `
-    <div style="font-family: Arial, sans-serif; background:#f4f7fb; padding:20px;">
-      <div style="max-width:600px; margin:auto; background:#ffffff; border-radius:10px; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
-
-        <!-- HEADER -->
-        <div style="text-align:center; padding:20px; background:#0f766e; color:white;">
-          <img src="https://cdn-icons-png.flaticon.com/512/3774/3774299.png" width="60"/>
-          <h2 style="margin:10px 0 5px;">MediTrack Hospital</h2>
-          <p style="margin:0;">Your Health, Our Responsibility</p>
-        </div>
-
-        <!-- BODY -->
-        <div style="padding:20px; color:#333;">
-          <h2 style="color:#0f766e;">Appointment Confirmation</h2>
-
-          <p>Dear <strong>${patient_name}</strong>,</p>
-
-          <p>
-            Greetings from <strong>MediTrack Hospital</strong> 👨‍⚕️<br/>
-            Your appointment has been successfully scheduled.
-          </p>
-
-          <table style="width:100%; border-collapse:collapse; margin-top:15px;">
-            <tr>
-              <td style="padding:8px; font-weight:bold;">Doctor</td>
-              <td style="padding:8px;">${doctor_name}</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:8px; font-weight:bold;">Department</td>
-              <td style="padding:8px;">${department}</td>
-            </tr>
-            <tr>
-              <td style="padding:8px; font-weight:bold;">Date</td>
-              <td style="padding:8px;">${appointment_date}</td>
-            </tr>
-            <tr style="background:#f9fafb;">
-              <td style="padding:8px; font-weight:bold;">Time</td>
-              <td style="padding:8px;">${appointment_time}</td>
-            </tr>
-          </table>
-
-          <p style="margin-top:20px;">
-            Please arrive <strong>10 minutes early</strong> for your consultation.
-          </p>
-
-          <p style="font-style:italic; color:#555;">
-            "Caring for life is our highest priority. Your trust inspires us to deliver excellence every day."
-          </p>
-
-          <p>We wish you good health always.</p>
-
-          <p>
-            Warm regards,<br/>
-            <strong>MediTrack Hospital Team</strong>
-          </p>
-        </div>
-
-        <!-- FOOTER -->
-        <div style="background:#f1f5f9; padding:15px; text-align:center; font-size:12px; color:#555;">
-          © 2026 MediTrack Hospital | Compassion • Care • Commitment
-        </div>
-
-      </div>
+    <div style="font-family: Arial, sans-serif; padding:20px;">
+      <h2>Appointment Confirmation</h2>
+      <p>Dear ${patient_name}, your appointment is booked successfully.</p>
+      <p><strong>Doctor:</strong> ${doctor_name}</p>
+      <p><strong>Department:</strong> ${department}</p>
+      <p><strong>Date:</strong> ${appointment_date}</p>
+      <p><strong>Time:</strong> ${appointment_time}</p>
     </div>
     `;
 
     /* =========================
-       SEND EMAIL TO PATIENT
+       SEND EMAILS (NON-BLOCKING ✅ FAST)
     ============================ */
-    await sendMail(
+    sendMail(
       email,
       "MediTrack Hospital | Appointment Confirmation",
       patientEmailHTML
-    );
+    ).catch(err => console.error("Email Error:", err));
 
-    /* =========================
-       SEND EMAIL TO HOSPITAL
-    ============================ */
-    const hospitalEmailHTML = `
-    <div style="font-family: Arial; padding:20px;">
-      <h2 style="color:#0f766e;">New Appointment Booked</h2>
-
-      <p>A new appointment has been scheduled.</p>
-
-      <ul>
-        <li><strong>Patient:</strong> ${patient_name}</li>
-        <li><strong>Email:</strong> ${email}</li>
-        <li><strong>Doctor:</strong> ${doctor_name}</li>
-        <li><strong>Department:</strong> ${department}</li>
-        <li><strong>Date:</strong> ${appointment_date}</li>
-        <li><strong>Time:</strong> ${appointment_time}</li>
-      </ul>
-
-      <p>Please manage the schedule accordingly.</p>
-    </div>
-    `;
-
-    await sendMail(
-      process.env.EMAIL_USER, // 👈 hospital receives here
+    sendMail(
+      process.env.EMAIL_USER,
       "New Appointment Alert",
-      hospitalEmailHTML
-    );
+      `New appointment for ${patient_name}`
+    ).catch(err => console.error("Email Error:", err));
 
     /* =========================
        RESPONSE
@@ -180,6 +103,27 @@ router.post("/", async (req, res) => {
     console.error("APPOINTMENT ERROR:", err);
     res.status(500).json({
       message: err.message || "Booking failed",
+    });
+  }
+});
+
+/* =========================
+   GET ALL APPOINTMENTS (ADMIN) ✅ FIXED
+========================= */
+router.get("/", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM appointments ORDER BY appointment_date DESC"
+    );
+
+    res.json({
+      data: result.rows,
+    });
+
+  } catch (err) {
+    console.error("FETCH ERROR:", err);
+    res.status(500).json({
+      message: "Failed to fetch appointments",
     });
   }
 });

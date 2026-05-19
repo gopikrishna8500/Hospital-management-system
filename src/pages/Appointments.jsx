@@ -1,50 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import API from "../api";
 
 const Appointments = () => {
-  const [appointments, setAppointments] = useState(
-    JSON.parse(localStorage.getItem("appointments")) || []
-  );
+  const [appointments, setAppointments] = useState([]);
 
-  const [form, setForm] = useState({
-    patient: "",
-    date: "",
-    time: "",
-  });
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updated = [...appointments, form];
-    setAppointments(updated);
-    localStorage.setItem("appointments", JSON.stringify(updated));
+  const fetchAppointments = async () => {
+    try {
+      const res = await API.get("/appointments");
+      setAppointments(res.data.data || []);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to load appointments");
+    }
   };
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Book Appointment</h2>
+      <h2 className="text-2xl font-bold mb-4">Appointments</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          placeholder="Patient Name"
-          required
-          className="border p-2 rounded-md w-full"
-          onChange={(e) => setForm({ ...form, patient: e.target.value })}
-        />
-        <input
-          type="date"
-          required
-          className="border p-2 rounded-md w-full"
-          onChange={(e) => setForm({ ...form, date: e.target.value })}
-        />
-        <input
-          type="time"
-          required
-          className="border p-2 rounded-md w-full"
-          onChange={(e) => setForm({ ...form, time: e.target.value })}
-        />
-        <button className="bg-teal-600 text-white px-4 py-2 rounded-md">
-          Book
-        </button>
-      </form>
+      <table className="w-full border">
+        <thead className="bg-teal-600 text-white">
+          <tr>
+            <th className="p-2">Patient</th>
+            <th className="p-2">Email</th>
+            <th className="p-2">Doctor</th>
+            <th className="p-2">Department</th>
+            <th className="p-2">Date</th>
+            <th className="p-2">Time</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {appointments.length > 0 ? (
+            appointments.map((a) => (
+              <tr key={a.id} className="text-center border-b">
+                <td className="p-2">{a.patient_name}</td>
+                <td className="p-2">{a.email}</td>
+                <td className="p-2">{a.doctor_name}</td>
+                <td className="p-2">{a.department}</td>
+                <td className="p-2">{a.appointment_date}</td>
+                <td className="p-2">{a.appointment_time}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6" className="p-4 text-center">
+                No appointments found
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };

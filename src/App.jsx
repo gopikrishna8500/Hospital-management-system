@@ -96,6 +96,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/doctors" element={<Doctors />} />
+        <Route path="appointments" element={<Appointments />} />
         <Route path="/appointments/book/:id" element={<Appointment />} />
         <Route path="/departments" element={<Departments />} />
         <Route path="/doctors/:id" element={<DoctorProfile />} />
