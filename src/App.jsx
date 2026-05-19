@@ -47,6 +47,7 @@ import DoctorLogin from "./pages/DoctorLogin";
 import StaffLogin from "./pages/StaffLogin";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
+import BillingList from "./pages/BillingList";
 
 const PrivacyPolicyPage = () => {
   return (
@@ -128,6 +129,7 @@ function App() {
           <Route path="appointments" element={<Appointments />} />
           <Route path="beds" element={<BedManagement />} />
           <Route path="billing" element={<Billing />} />
+          <Route path="billing-list" element={<BillingList />} />
         </Route>
 
       </Routes>

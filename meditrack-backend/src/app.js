@@ -22,6 +22,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
+
 app.use("/api/appointments", appointmentRoutes);
 
 /* =========================
@@ -76,6 +77,7 @@ const upload = multer({
 app.use("/api/dashboard", require("./modules/dashboard/dashboard.routes"));
 app.use("/api/auth", require("./modules/auth/auth.routes"));
 app.use("/api/patients", require("./modules/patients/patients.routes"));
+app.use("/api/billing", require("./routes/billing.routes"));
 
 /* =========================
    REPORT UPLOAD (FINAL)

@@ -24,7 +24,6 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
-  // Persist theme
   useEffect(() => {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
@@ -36,7 +35,9 @@ const DashboardLayout = () => {
     navigate("/login");
   };
 
-  // ✅ Role-Based Menu (ROUTES FIXED)
+  /* =========================
+     ROLE-BASED MENU (UPDATED)
+  ========================= */
   let menuItems = [];
 
   if (role === "admin") {
@@ -47,7 +48,12 @@ const DashboardLayout = () => {
       { name: "Medical Reports", icon: <FileText size={18} />, path: "/reports" },
       { name: "Bed Management", icon: <Bed size={18} />, path: "/beds" },
       { name: "Appointments", icon: <CalendarCheck size={18} />, path: "/appointments" },
+
+      // ✅ BILLING MAIN
       { name: "Billing", icon: <Receipt size={18} />, path: "/billing" },
+
+      // ✅ NEW: BILLING LIST (INVOICES)
+      { name: "Invoices", icon: <Receipt size={18} />, path: "/billing-list" },
     ];
   }
 
@@ -65,6 +71,9 @@ const DashboardLayout = () => {
       { name: "Register Patient", icon: <UserPlus size={18} />, path: "/patient-registration" },
       { name: "Patient Records", icon: <Users size={18} />, path: "/patient-records" },
       { name: "Appointments", icon: <CalendarCheck size={18} />, path: "/appointments" },
+
+      // ✅ OPTIONAL: staff can also see invoices
+      { name: "Invoices", icon: <Receipt size={18} />, path: "/billing-list" },
     ];
   }
 
@@ -88,7 +97,9 @@ const DashboardLayout = () => {
           open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
-        <h2 className="text-2xl font-bold tracking-wide">IdealPathSoftwareSolutions MediTrack</h2>
+        <h2 className="text-2xl font-bold tracking-wide">
+          IdealPathSoftwareSolutions MediTrack
+        </h2>
 
         <nav className="space-y-3">
           {menuItems.map((item) => (
@@ -110,7 +121,7 @@ const DashboardLayout = () => {
           ))}
         </nav>
 
-        {/* Dark Mode Toggle */}
+        {/* Dark Mode */}
         <button
           onClick={() => setDarkMode(!darkMode)}
           className="flex items-center gap-2 mt-10 text-yellow-300 hover:text-yellow-400 transition"
@@ -130,7 +141,6 @@ const DashboardLayout = () => {
 
       {/* Main Content */}
       <div className="flex-1 p-6 md:ml-64">
-
         {/* Mobile Top Bar */}
         <div className="md:hidden flex justify-between items-center mb-6">
           <button
