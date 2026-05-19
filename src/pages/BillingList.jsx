@@ -1,52 +1,59 @@
-import React, { useEffect, useState } from "react";
-import API from "../api";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const BillingList = () => {
-  const [bills, setBills] = useState([]);
+const Billing = () => {
+  const [patientName, setPatientName] = useState("");
+  const [amount, setAmount] = useState("");
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchBills = async () => {
-      try {
-        const res = await API.get("/billing");
-        setBills(res.data.data || []);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const generateInvoice = async () => {
+    try {
+      const res = await axios.post(
+        "https://hospital-management-system-4-kceq.onrender.com/api/billing",
+        {
+          patient_name: patientName,
+          amount: amount,
+        }
+      );
 
-    fetchBills();
-  }, []);
+      console.log("Invoice Created:", res.data);
+
+      // ✅ GO TO INVOICE LIST PAGE
+      navigate("/billing-list");
+
+    } catch (err) {
+      console.error(err);
+      alert("Billing failed");
+    }
+  };
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-6">All Invoices</h2>
+      <h2 className="text-2xl font-bold mb-6">Billing System</h2>
 
-      {bills.length === 0 ? (
-        <p>No invoices found</p>
-      ) : (
-        <table className="w-full border">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2">Patient</th>
-              <th className="p-2">Amount</th>
-              <th className="p-2">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bills.map((bill) => (
-              <tr key={bill.id} className="text-center border-t">
-                <td className="p-2">{bill.patient_name}</td>
-                <td className="p-2">₹{bill.amount}</td>
-                <td className="p-2">
-                  {new Date(bill.created_at).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <input
+        placeholder="Patient Name"
+        value={patientName}
+        onChange={(e) => setPatientName(e.target.value)}
+        className="border p-2 mr-2"
+      />
+
+      <input
+        placeholder="Amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        className="border p-2 mr-2"
+      />
+
+      <button
+        onClick={generateInvoice}
+        className="bg-teal-600 text-white px-4 py-2 rounded"
+      >
+        Generate Invoice
+      </button>
     </div>
   );
 };
 
-export default BillingList;
+export default Billing;
