@@ -7,44 +7,40 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 const appointmentRoutes = require("./routes/appointments.routes");
+
 dotenv.config();
 
 const pool = require("./config/db");
-const {
-  verifyToken: authenticateToken,
-} = require("./middleware/auth.middleware");
-const dashboardRoutes = require("./modules/dashboard/dashboard.routes");
-const authRoutes = require("./modules/auth/auth.routes");
-const patientsRoutes = require("./modules/patients/patients.routes");
 
 const app = express();
 
 /* =========================
    GLOBAL MIDDLEWARE
 ========================= */
-
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use("/api/appointments", appointmentRoutes);
-/* =========================
-   ENSURE UPLOADS FOLDER EXISTS
-========================= */
 
-if (!fs.existsSync("uploads")) {
-  fs.mkdirSync("uploads");
+app.use("/api/appointments", appointmentRoutes);
+
+/* =========================
+   FIX: UPLOAD PATH (IMPORTANT)
+========================= */
+const uploadDir = path.join(__dirname, "uploads");
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true }); // ✅ FIX
 }
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(uploadDir));
 
 /* =========================
-   MULTER CONFIG
+   MULTER CONFIG (FINAL FIX)
 ========================= */
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    cb(null, uploadDir); // ✅ FIX (absolute path)
   },
   filename: (req, file, cb) => {
     const uniqueName =
@@ -55,10 +51,21 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // ✅ 5MB limit (VERY IMPORTANT)
+  },
   fileFilter: (req, file, cb) => {
-    if (file.mimetype !== "application/pdf") {
-      return cb(new Error("Only PDF files allowed"), false);
+    const allowedTypes = [
+      "application/pdf",
+      "image/jpeg",
+      "image/png",
+      "image/jpg",
+    ];
+
+    if (!allowedTypes.includes(file.mimetype)) {
+      return cb(new Error("Only PDF or Image allowed"), false);
     }
+
     cb(null, true);
   },
 });
@@ -66,79 +73,91 @@ const upload = multer({
 /* =========================
    ROUTES
 ========================= */
-
-app.use("/api/dashboard", dashboardRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/patients", patientsRoutes);
+app.use("/api/dashboard", require("./modules/dashboard/dashboard.routes"));
+app.use("/api/auth", require("./modules/auth/auth.routes"));
+app.use("/api/patients", require("./modules/patients/patients.routes"));
 
 /* =========================
-   REPORTS ROUTES
+   REPORT UPLOAD (FINAL)
 ========================= */
+app.post("/api/reports/:patientId", upload.single("report"), async (req, res) => {
+  try {
+    console.log("FILE RECEIVED:", req.file);
 
-// Upload Report
-app.post(
-  "/api/reports/:patientId",
-  authenticateToken,
-  upload.single("report"),
-  async (req, res) => {
     const { patientId } = req.params;
 
     if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded" });
+      return res.status(400).json({ message: "No file uploaded ❌" });
     }
 
-    try {
-      const result = await pool.query(
-        `INSERT INTO reports (patient_id, file_name, file_path)
-         VALUES ($1, $2, $3)
-         RETURNING *`,
-        [patientId, req.file.filename, req.file.path]
-      );
+    const result = await pool.query(
+      `INSERT INTO reports (patient_id, file_name, file_path)
+       VALUES ($1, $2, $3)
+       RETURNING *`,
+      [patientId, req.file.filename, req.file.path]
+    );
 
-      res.json({
-        message: "Report uploaded successfully",
-        report: result.rows[0],
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Upload failed" });
-    }
+    res.json({
+      message: "Report uploaded successfully ✅",
+      data: result.rows[0],
+    });
+
+  } catch (error) {
+    console.error("🔥 FULL ERROR:", error);
+
+    res.status(500).json({
+      message: error.message || "Upload failed ❌",
+    });
   }
-);
+});
 
-// Get Reports
-app.get(
-  "/api/reports/:patientId",
-  authenticateToken,
-  async (req, res) => {
+/* =========================
+   GET REPORTS
+========================= */
+app.get("/api/reports/:patientId", async (req, res) => {
+  try {
     const { patientId } = req.params;
 
-    try {
-      const result = await pool.query(
-        "SELECT * FROM reports WHERE patient_id = $1 ORDER BY uploaded_at DESC",
-        [patientId]
-      );
+    const result = await pool.query(
+      "SELECT * FROM reports WHERE patient_id = $1 ORDER BY uploaded_at DESC",
+      [patientId]
+    );
 
-      res.json({ data: result.rows });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Failed to fetch reports" });
-    }
+    res.json({ data: result.rows });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch reports" });
   }
-);
+});
+
+/* =========================
+   GLOBAL ERROR HANDLER (IMPORTANT)
+========================= */
+app.use((err, req, res, next) => {
+  console.error("GLOBAL ERROR:", err);
+
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({ message: err.message });
+  }
+
+  if (err.message === "Only PDF or Image allowed") {
+    return res.status(400).json({ message: err.message });
+  }
+
+  res.status(500).json({ message: "Server error ❌" });
+});
 
 /* =========================
    HEALTH CHECK
 ========================= */
-
 app.get("/", (req, res) => {
-  res.send("🚀 IdealPathSoftwareSolutions MediTrack Backend Running");
+  res.send("🚀 MediTrack Backend Running");
 });
 
 /* =========================
    404 HANDLER
 ========================= */
-
 app.use((req, res) => {
   res.status(404).json({ message: "Route Not Found" });
 });

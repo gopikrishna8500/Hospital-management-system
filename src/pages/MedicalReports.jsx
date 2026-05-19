@@ -9,10 +9,6 @@ const MedicalReports = () => {
 
   const fileInputRef = useRef(null);
 
-  /* =========================
-     FETCH PATIENTS
-  ============================*/
-  
   useEffect(() => {
     const fetchPatients = async () => {
       try {
@@ -27,12 +23,8 @@ const MedicalReports = () => {
     fetchPatients();
   }, []);
 
-  /* =========================
-     FILE HANDLER
-  ============================*/
   const handleFile = (e) => {
     const selected = e.target.files[0];
-
     if (!selected) return;
 
     const allowed = [
@@ -50,9 +42,6 @@ const MedicalReports = () => {
     setFile(selected);
   };
 
-  /* =========================
-     UPLOAD
-  ============================*/
   const handleUpload = async () => {
     if (!selectedPatient || !file) {
       alert("Select patient & file");
@@ -65,7 +54,13 @@ const MedicalReports = () => {
     try {
       setLoading(true);
 
-      await API.post(`/reports/${selectedPatient}`, formData);
+      const res = await API.post(`/reports/${selectedPatient}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("SUCCESS:", res.data);
 
       alert("Uploaded Successfully ✅");
 
@@ -74,9 +69,13 @@ const MedicalReports = () => {
       fileInputRef.current.value = "";
 
     } catch (err) {
-      console.error("UPLOAD ERROR:", err.response?.data || err.message);
+      console.error("UPLOAD ERROR:", err);
 
-      alert(err.response?.data?.message || "Upload failed ❌");
+      alert(
+        err.response?.data?.message ||
+        err.message ||
+        "Upload failed ❌"
+      );
     } finally {
       setLoading(false);
     }
@@ -88,7 +87,6 @@ const MedicalReports = () => {
         Upload Medical Report
       </h2>
 
-      {/* SELECT PATIENT */}
       <select
         value={selectedPatient}
         onChange={(e) => setSelectedPatient(e.target.value)}
@@ -102,21 +100,18 @@ const MedicalReports = () => {
         ))}
       </select>
 
-      {/* FILE INPUT (CAMERA ENABLED) */}
       <input
         type="file"
         accept="application/pdf,image/*"
-        capture="environment"
         onChange={handleFile}
         ref={fileInputRef}
         className="block mb-4 w-full"
       />
 
-      {/* BUTTON */}
       <button
         onClick={handleUpload}
         disabled={loading}
-        className="w-full bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-500 transition"
+        className="w-full bg-teal-600 text-white px-4 py-2 rounded-md"
       >
         {loading ? "Uploading..." : "Upload Report"}
       </button>
