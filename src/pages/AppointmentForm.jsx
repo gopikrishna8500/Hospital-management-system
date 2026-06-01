@@ -10,12 +10,12 @@ const AppointmentForm = () => {
     patient_id: "",
     patient_name: "",
     email: "",
+    mobile: "",
     doctor_name: "",
     department: "",
     appointment_date: "",
     appointment_time: "",
   });
-
   const [loading, setLoading] = useState(false);
 
   /* =========================
@@ -112,6 +112,14 @@ const AppointmentForm = () => {
         name="email"
         placeholder="Email"
         value={form.email}
+        onChange={handleChange}
+        className="border p-2 w-full mb-2 rounded"
+      />
+      <input
+        type="text"
+        name="mobile"
+        placeholder="Mobile Number"
+        value={form.mobile}
         onChange={handleChange}
         className="border p-2 w-full mb-2 rounded"
       />
