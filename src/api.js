@@ -1,17 +1,17 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://https://hospital-management-system-3-ne6q.onrender.com/api",
+  baseURL: "https://hospital-management-system-3-ne6q.onrender.com/api",
 });
 
-API.interceptors.request.use((req) => {
+API.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
 
   if (token) {
-    req.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
-  return req;
+  return config;
 });
 
 export default API;
