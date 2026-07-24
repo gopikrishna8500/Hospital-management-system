@@ -18,7 +18,7 @@ const StaffDashboard = () => {
     const fetchPatients = async () => {
       try {
         const res = await axios.get(
-          "https://hospital-management-system-4-kceq.onrender.com/api/patients",
+          "https://hospital-management-system-3-kceq.onrender.com/api/patients",
           {
             headers: {
               Authorization: `Bearer ${token}`,

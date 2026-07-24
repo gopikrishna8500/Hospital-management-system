@@ -10,7 +10,7 @@ const Billing = () => {
   const generateInvoice = async () => {
     try {
       const res = await axios.post(
-        "https://hospital-management-system-4-kceq.onrender.com/api/billing",
+        "https://hospital-management-system-3-kceq.onrender.com/api/billing",
         {
           patient_name: patientName,
           amount: amount,

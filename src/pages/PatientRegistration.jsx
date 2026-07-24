@@ -49,7 +49,7 @@ const PatientRegistration = () => {
 
     try {
       await axios.post(
-        "https://hospital-management-system-4-kceq.onrender.com/api/patients",
+        "https://hospital-management-system-3-kceq.onrender.com/api/patients",
         form,
         {
           headers: {

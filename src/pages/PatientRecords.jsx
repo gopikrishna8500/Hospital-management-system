@@ -20,7 +20,7 @@ const PatientRecords = () => {
   const fetchPatients = async () => {
     try {
       const res = await axios.get(
-        "https://hospital-management-system-4-kceq.onrender.com/api/patients",
+        "https://hospital-management-system-3-kceq.onrender.com/api/patients",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -42,7 +42,7 @@ const PatientRecords = () => {
 
     try {
       await axios.delete(
-        `https://hospital-management-system-4-kceq.onrender.com/api/patients/${id}`,
+        `https://hospital-management-system-3-kceq.onrender.com/api/patients/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
