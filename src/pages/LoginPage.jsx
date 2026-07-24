@@ -24,13 +24,13 @@ const LoginPage = () => {
 
       // ✅ LOGIN API
       const res = await axios.post(
-        "https://hospital-management-system-4-kceq.onrender.com/api/auth/login",
-        {
-          email,
-          password,
-          role, // ✅ SEND ROLE
-        }
-      );
+  "https://hospital-management-system-4-kceq.onrender.com/api/auth/login",
+  {
+    email,
+    password,
+    role,
+  }
+);
 
       // ✅ STORE TOKEN
       localStorage.setItem("token", res.data.token);
