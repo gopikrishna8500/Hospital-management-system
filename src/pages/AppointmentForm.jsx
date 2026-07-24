@@ -10,7 +10,6 @@ const AppointmentForm = () => {
     patient_id: "",
     patient_name: "",
     email: "",
-    mobile: "",
     doctor_name: "",
     department: "",
     appointment_date: "",
@@ -115,14 +114,7 @@ const AppointmentForm = () => {
         onChange={handleChange}
         className="border p-2 w-full mb-2 rounded"
       />
-      <input
-        type="text"
-        name="mobile"
-        placeholder="Mobile Number"
-        value={form.mobile}
-        onChange={handleChange}
-        className="border p-2 w-full mb-2 rounded"
-      />
+    
 
       {/* ✅ DOCTOR DROPDOWN */}
       <select

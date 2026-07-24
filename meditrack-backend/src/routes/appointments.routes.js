@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../config/db");
 const sendMail = require("../utils/mailer");
-const sendWhatsApp = require("../utils/whatsapp");
+
 
 /* =========================
    CREATE APPOINTMENT (PUBLIC)
@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
       patient_id,
       patient_name,
       email,
-      mobile,
+   
       doctor_name,
       department,
       appointment_date,
@@ -26,7 +26,6 @@ router.post("/", async (req, res) => {
     if (
       !patient_name ||
       !email ||
-      !mobile ||
       !doctor_name ||
       !department ||
       !appointment_date ||
@@ -93,30 +92,7 @@ router.post("/", async (req, res) => {
       "New Appointment Alert",
       `New appointment for ${patient_name}`
     ).catch(err => console.error("Email Error:", err));
-    /* =========================
-   SEND WHATSAPP MESSAGE
-========================= */
-    const whatsappMessage = `
-🏥 MediTrack Hospital
-
-Appointment Confirmed ✅
-
-Patient: ${patient_name}
-
-Doctor: ${doctor_name}
-
-Department: ${department}
-
-Date: ${appointment_date}
-
-Time: ${appointment_time}
-
-Thank you for choosing MediTrack Hospital.
-`;
-
-    sendWhatsApp(mobile, whatsappMessage)
-      .catch(err => console.error("WhatsApp Error:", err));
-
+  
     /* =========================
        RESPONSE
     ============================ */
