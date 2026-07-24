@@ -23,8 +23,8 @@ const LoginPage = () => {
       setLoading(true);
 
       // ✅ LOGIN API
-      const res = await axios.post(
-  "https://hospital-management-system-4-kceq.onrender.com/api/auth/login",
+    const res = await axios.post(
+  "https://hospital-management-system-3-ne6q.onrender.com/api/auth/login",
   {
     email,
     password,
