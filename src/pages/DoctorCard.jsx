@@ -24,7 +24,7 @@ const DoctorCard = ({ doctor }) => {
   return (
     <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition flex flex-col items-center text-center">
       {/* Doctor Photo */}
-         {/* Doctor Photo */}
+      {/* Doctor Photo */}
       <img
         src={profileImage}
         alt="Doctor"
@@ -40,11 +40,10 @@ const DoctorCard = ({ doctor }) => {
       {/* Availability */}
       <div className="mt-2">
         <span
-          className={`px-3 py-1 rounded-full text-sm ${
-            doctor.availability === "Available"
+          className={`px-3 py-1 rounded-full text-sm ${doctor.availability === "Available"
               ? "bg-green-100 text-green-700"
               : "bg-red-100 text-red-600"
-          }`}
+            }`}
         >
           {doctor.availability}
         </span>
