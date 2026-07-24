@@ -48,18 +48,17 @@ const DepartmentDetails = () => {
 
               <div className="mt-4">
                 <span
-                  className={`px-3 py-1 rounded-full text-sm ${
-                    doctor.availability === "Available"
+                  className={`px-3 py-1 rounded-full text-sm ${doctor.availability === "Available"
                       ? "bg-green-100 text-green-700"
                       : "bg-red-100 text-red-600"
-                  }`}
+                    }`}
                 >
                   {doctor.availability}
                 </span>
               </div>
 
               <button
-                onClick={() => navigate("/appointments")}
+                onClick={() => navigate(`/appointments/book/${doctor.id}`)}
                 className="mt-6 w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition"
               >
                 Book Appointment

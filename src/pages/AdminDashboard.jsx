@@ -30,7 +30,7 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         const patientRes = await axios.get(
-          "https://https://hospital-management-system-3-ne6q.onrender.com/api/patients",
+        "https://hospital-management-system-3-ne6q.onrender.com/api/patients",
           {
             headers: {
               Authorization: `Bearer ${token}`,
