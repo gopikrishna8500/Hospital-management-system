@@ -3,20 +3,7 @@ import { Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import profileImage from "../assets/profile.png";
 // Exporting doctorsData for reuse in Doctors.jsx
-export const doctorsData = [
-  { id: 1, name: "Dr. John Smith", specialization: "General Medicine", experience: "12 Years", availability: "Available", rating: 5 },
-  { id: 2, name: "Dr. Sarah Williams", specialization: "Cardiology", experience: "15 Years", availability: "Available", rating: 4 },
-  { id: 3, name: "Dr. Michael Brown", specialization: "Neurology", experience: "10 Years", availability: "On Leave", rating: 4 },
-  { id: 4, name: "Dr. David Johnson", specialization: "Orthopedics", experience: "14 Years", availability: "Available", rating: 5 },
-  { id: 5, name: "Dr. Emily Carter", specialization: "Pediatrics", experience: "8 Years", availability: "Available", rating: 5 },
-  { id: 6, name: "Dr. Laura White", specialization: "Gynecology", experience: "11 Years", availability: "Available", rating: 4 },
-  { id: 7, name: "Dr. Robert Lee", specialization: "Oncology", experience: "13 Years", availability: "Available", rating: 5 },
-  { id: 8, name: "Dr. Angela Scott", specialization: "Emergency", experience: "9 Years", availability: "Available", rating: 4 },
-  { id: 9, name: "Dr. Kevin Hall", specialization: "Radiology", experience: "10 Years", availability: "Available", rating: 4 },
-  { id: 10, name: "Dr. Rachel Adams", specialization: "Pathology", experience: "7 Years", availability: "On Leave", rating: 4 },
-  { id: 11, name: "Dr. Steven Wilson", specialization: "Pharmacy", experience: "12 Years", availability: "Available", rating: 5 },
-  { id: 12, name: "Dr. Jennifer Clark", specialization: "ICU", experience: "14 Years", availability: "Available", rating: 5 },
-];
+
 
 const DoctorCard = ({ doctor }) => {
   const navigate = useNavigate();
@@ -33,7 +20,9 @@ const DoctorCard = ({ doctor }) => {
       {/* <div className="w-24 h-24 bg-gray-300 rounded-full mx-auto mb-4"></div> */}
 
       {/* Doctor Info */}
-      <h3 className="text-xl font-semibold">{doctor.name}</h3>
+      <h3 className="text-xl font-semibold">{<p className="text-sm text-gray-500 mt-1">
+ Department Status: {dept.status}
+</p>}</h3>
       <p className="text-gray-600 mt-2">{doctor.specialization}</p>
       <p className="text-sm text-gray-500 mt-1">Experience: {doctor.experience}</p>
 

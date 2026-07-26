@@ -1,117 +1,263 @@
-import React, { useState } from "react";
+import React, {useEffect,useState} from "react";
+import API from "../api";
 
-const DepartmentManagement = () => {
-  const [department, setDepartment] = useState("");
-  const [departments, setDepartments] = useState([
-    {
-      id: 1,
-      name: "Cardiology",
-      head: "Dr. Ravi Kumar",
-    },
-    {
-      id: 2,
-      name: "Neurology",
-      head: "Dr. Priya",
-    },
-  ]);
 
-  const addDepartment = () => {
-    if (!department.trim()) {
-      alert("Enter Department Name");
-      return;
-    }
+const DepartmentManagement =()=>{
 
-    const newDepartment = {
-      id: Date.now(),
-      name: department,
-      head: "",
-    };
 
-    setDepartments([...departments, newDepartment]);
-    setDepartment("");
-  };
+const [department,setDepartment]=useState("");
 
-  const deleteDepartment = (id) => {
-    setDepartments(departments.filter((d) => d.id !== id));
-  };
+const [departments,setDepartments]=useState([]);
 
-  return (
-    <div className="min-h-screen bg-gray-100 p-8">
 
-      <div className="bg-white rounded-xl shadow-lg p-8">
 
-        <h1 className="text-3xl font-bold text-teal-700 mb-8">
-          Department Management
-        </h1>
+/* GET DEPARTMENTS */
 
-        <div className="flex gap-4 mb-8">
+const fetchDepartments=async()=>{
 
-          <input
-            type="text"
-            placeholder="Department Name"
-            value={department}
-            onChange={(e) => setDepartment(e.target.value)}
-            className="border rounded-lg p-3 w-full"
-          />
+try{
 
-          <button
-            onClick={addDepartment}
-            className="bg-teal-600 text-white px-6 rounded-lg hover:bg-teal-700"
-          >
-            Add
-          </button>
+const res=await API.get("/departments");
 
-        </div>
+setDepartments(res.data.data);
 
-        <table className="w-full">
 
-          <thead>
+}catch(error){
 
-            <tr className="bg-teal-600 text-white">
+console.log(error);
 
-              <th className="p-3">Department</th>
+}
 
-              <th>Head</th>
-
-              <th>Action</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {departments.map((dept) => (
-
-              <tr key={dept.id} className="border-b">
-
-                <td className="p-3">{dept.name}</td>
-
-                <td>{dept.head || "-"}</td>
-
-                <td>
-
-                  <button
-                    onClick={() => deleteDepartment(dept.id)}
-                    className="bg-red-500 text-white px-4 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-
-                </td>
-
-              </tr>
-
-            ))}
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-  );
 };
+
+
+
+useEffect(()=>{
+
+fetchDepartments();
+
+},[]);
+
+
+
+
+
+/* ADD DEPARTMENT */
+
+const addDepartment=async()=>{
+
+
+if(!department.trim()){
+
+alert("Enter Department Name");
+return;
+
+}
+
+
+try{
+
+
+await API.post("/departments",{
+
+department_name:department,
+department_head:"",
+description:""
+
+
+});
+
+
+setDepartment("");
+
+fetchDepartments();
+
+
+}catch(error){
+
+console.log(error);
+
+}
+
+
+};
+
+
+
+
+
+/* DELETE */
+
+const deleteDepartment=async(id)=>{
+
+
+try{
+
+await API.delete(`/departments/${id}`);
+
+fetchDepartments();
+
+
+}catch(error){
+
+console.log(error);
+
+}
+
+
+};
+
+
+
+
+return(
+
+<div className="min-h-screen bg-gray-100 p-8">
+
+
+<div className="bg-white rounded-xl shadow-lg p-8">
+
+
+<h1 className="text-3xl font-bold text-teal-700 mb-8">
+
+Department Management
+
+</h1>
+
+
+
+<div className="flex gap-4 mb-8">
+
+
+<input
+
+placeholder="Department Name"
+
+value={department}
+
+onChange={(e)=>setDepartment(e.target.value)}
+
+className="border p-3 rounded-lg w-full"
+
+/>
+
+
+<button
+
+onClick={addDepartment}
+
+className="bg-teal-600 text-white px-6 rounded-lg"
+
+>
+
+Add
+
+</button>
+
+
+</div>
+
+
+
+
+<table className="w-full">
+
+
+<thead>
+
+<tr className="bg-teal-600 text-white">
+
+<th className="p-3">
+Department
+</th>
+
+
+<th>
+Status
+</th>
+
+
+<th>
+Action
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+{
+departments.map((dept)=>(
+
+
+<tr key={dept.id} className="border-b text-center">
+
+
+<td className="p-3">
+
+{dept.department_name}
+
+</td>
+
+
+<td>
+
+{dept.status}
+
+</td>
+
+
+<td>
+
+
+<button
+
+onClick={()=>deleteDepartment(dept.id)}
+
+className="bg-red-600 text-white px-4 py-1 rounded"
+
+>
+
+Delete
+
+</button>
+
+
+</td>
+
+
+
+</tr>
+
+
+))
+
+}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
+
+
+)
+
+
+}
+
 
 export default DepartmentManagement;

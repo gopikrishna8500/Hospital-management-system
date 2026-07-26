@@ -1,170 +1,367 @@
-import React, { useState } from "react";
+import React,{useEffect,useState} from "react";
+import API from "../api";
 
-const departments = [
-  "Cardiology",
-  "Neurology",
-  "Orthopedics",
-  "ENT",
-  "Radiology",
-];
 
-const DoctorManagement = () => {
-  const [doctor, setDoctor] = useState({
-    name: "",
-    department: "",
-    experience: "",
-    availability: "Available",
-  });
+const DoctorManagement=()=>{
 
-  const [doctors, setDoctors] = useState([]);
 
-  const handleChange = (e) => {
-    setDoctor({
-      ...doctor,
-      [e.target.name]: e.target.value,
-    });
-  };
+const [departments,setDepartments]=useState([]);
 
-  const addDoctor = () => {
-    setDoctors([
-      ...doctors,
-      {
-        id: Date.now(),
-        ...doctor,
-      },
-    ]);
+const [doctors,setDoctors]=useState([]);
 
-    setDoctor({
-      name: "",
-      department: "",
-      experience: "",
-      availability: "Available",
-    });
-  };
 
-  const deleteDoctor = (id) => {
-    setDoctors(doctors.filter((d) => d.id !== id));
-  };
 
-  return (
-    <div className="min-h-screen bg-gray-100 p-8">
+const [doctor,setDoctor]=useState({
 
-      <div className="bg-white p-8 rounded-xl shadow-lg">
+doctor_name:"",
+specialization:"",
+department_id:"",
+qualification:"",
+experience:"",
+phone:"",
+email:""
 
-        <h1 className="text-3xl font-bold text-teal-700 mb-8">
-          Doctor Management
-        </h1>
+});
 
-        <div className="grid md:grid-cols-4 gap-4 mb-8">
 
-          <input
-            name="name"
-            placeholder="Doctor Name"
-            value={doctor.name}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          />
 
-          <select
-            name="department"
-            value={doctor.department}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          >
-            <option>Select Department</option>
 
-            {departments.map((d) => (
-              <option key={d}>{d}</option>
-            ))}
 
-          </select>
+useEffect(()=>{
 
-          <input
-            name="experience"
-            placeholder="Experience"
-            value={doctor.experience}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          />
+loadDepartments();
 
-          <select
-            name="availability"
-            value={doctor.availability}
-            onChange={handleChange}
-            className="border p-3 rounded-lg"
-          >
-            <option>Available</option>
-            <option>Busy</option>
-            <option>On Leave</option>
-            <option>Not Available</option>
-          </select>
+loadDoctors();
 
-        </div>
 
-        <button
-          onClick={addDoctor}
-          className="bg-teal-600 text-white px-6 py-3 rounded-lg"
-        >
-          Add Doctor
-        </button>
+},[]);
 
-        <table className="w-full mt-8">
 
-          <thead>
 
-            <tr className="bg-teal-600 text-white">
 
-              <th>Name</th>
 
-              <th>Department</th>
+const loadDepartments=async()=>{
 
-              <th>Experience</th>
+const res=await API.get("/departments");
 
-              <th>Status</th>
+setDepartments(res.data.data);
 
-              <th>Action</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {doctors.map((doc) => (
-
-              <tr key={doc.id} className="border-b text-center">
-
-                <td>{doc.name}</td>
-
-                <td>{doc.department}</td>
-
-                <td>{doc.experience}</td>
-
-                <td>{doc.availability}</td>
-
-                <td>
-
-                  <button
-                    onClick={() => deleteDoctor(doc.id)}
-                    className="bg-red-600 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-
-                </td>
-
-              </tr>
-
-            ))}
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    </div>
-  );
 };
+
+
+
+
+const loadDoctors=async()=>{
+
+const res=await API.get("/doctors");
+
+setDoctors(res.data.data);
+
+};
+
+
+
+
+
+const handleChange=(e)=>{
+
+
+setDoctor({
+
+...doctor,
+
+[e.target.name]:e.target.value
+
+
+});
+
+
+};
+
+
+
+
+
+const addDoctor=async()=>{
+
+
+try{
+
+
+await API.post("/doctors",doctor);
+
+
+loadDoctors();
+
+
+
+setDoctor({
+
+doctor_name:"",
+specialization:"",
+department_id:"",
+qualification:"",
+experience:"",
+phone:"",
+email:""
+
+});
+
+
+}catch(error){
+
+console.log(error);
+
+}
+
+
+};
+
+
+
+
+
+const deleteDoctor=async(id)=>{
+
+
+await API.delete(`/doctors/${id}`);
+
+loadDoctors();
+
+
+};
+
+
+
+
+
+return(
+
+
+<div className="min-h-screen bg-gray-100 p-8">
+
+
+<div className="bg-white p-8 rounded-xl shadow">
+
+
+<h1 className="text-3xl font-bold text-teal-700 mb-8">
+
+Doctor Management
+
+</h1>
+
+
+
+<div className="grid md:grid-cols-4 gap-4">
+
+
+<input
+
+name="doctor_name"
+
+placeholder="Doctor Name"
+
+value={doctor.doctor_name}
+
+onChange={handleChange}
+
+className="border p-3"
+
+/>
+
+
+
+<input
+
+name="specialization"
+
+placeholder="Specialization"
+
+value={doctor.specialization}
+
+onChange={handleChange}
+
+className="border p-3"
+
+/>
+
+
+
+
+<select
+
+name="department_id"
+
+value={doctor.department_id}
+
+onChange={handleChange}
+
+className="border p-3"
+
+>
+
+
+<option>
+Select Department
+</option>
+
+
+{
+
+departments.map(d=>(
+
+<option key={d.id} value={d.id}>
+
+{d.department_name}
+
+</option>
+
+))
+
+}
+
+
+</select>
+
+
+
+<input
+
+name="experience"
+
+placeholder="Experience"
+
+value={doctor.experience}
+
+onChange={handleChange}
+
+className="border p-3"
+
+/>
+
+
+</div>
+
+
+
+
+<button
+
+onClick={addDoctor}
+
+className="bg-teal-600 text-white px-6 py-3 mt-6 rounded"
+
+>
+
+Add Doctor
+
+</button>
+
+
+
+
+
+
+<table className="w-full mt-8">
+
+
+<thead>
+
+
+<tr className="bg-teal-600 text-white">
+
+<th>Name</th>
+
+<th>Department</th>
+
+<th>Specialization</th>
+
+<th>Action</th>
+
+
+</tr>
+
+
+</thead>
+
+
+<tbody>
+
+
+{
+
+doctors.map(doc=>(
+
+
+<tr key={doc.id} className="border text-center">
+
+
+<td>
+
+{doc.doctor_name}
+
+</td>
+
+
+<td>
+
+{doc.department_name}
+
+</td>
+
+
+<td>
+
+{doc.specialization}
+
+</td>
+
+
+<td>
+
+
+<button
+
+onClick={()=>deleteDoctor(doc.id)}
+
+className="bg-red-600 text-white px-3 py-1 rounded"
+
+>
+
+Delete
+
+</button>
+
+
+</td>
+
+
+</tr>
+
+
+))
+
+
+}
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</div>
+
+
+</div>
+
+
+)
+
+}
+
 
 export default DoctorManagement;

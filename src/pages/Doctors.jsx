@@ -1,21 +1,55 @@
-import React, { useState } from "react";
-import DoctorCard, { doctorsData } from "./DoctorCard";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import DoctorCard from "./DoctorCard"; import { motion } from "framer-motion";
 const Doctors = () => {
-  const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("");
 
-  const filteredDoctors = doctorsData.filter(
-    (doc) =>
-      doc.name.toLowerCase().includes(search.toLowerCase()) &&
+
+  const [doctors, setDoctors] = useState([]);
+
+  const [search, setSearch] = useState("");
+
+  const [filter, setFilter] = useState("");
+  useEffect(()=>{
+
+fetchDoctors();
+
+},[]);
+
+
+
+const fetchDoctors = async()=>{
+
+try{
+
+const response = await fetch(
+"http://localhost:5000/api/doctors"
+);
+
+
+const data = await response.json();
+
+
+setDoctors(data);
+
+
+}catch(error){
+
+console.log(error);
+
+}
+
+};
+
+const filteredDoctors = doctors.filter(    (doc) =>
+      doc.doctor_name.toLowerCase().includes(search.toLowerCase()) &&
       (filter ? doc.specialization === filter : true)
   );
 
-  const specializations = [...new Set(doctorsData.map((doc) => doc.specialization))];
+  const specializations = [
+...new Set(doctors.map((doc) => doc.specialization))];
 
   return (
     <div className="bg-gray-50 min-h-screen ">
-           <section className="relative bg-linear-to-r from-teal-700 to-teal-500 text-white pt-10 pb-24">
+      <section className="relative bg-linear-to-r from-teal-700 to-teal-500 text-white pt-10 pb-24">
 
         <div className="max-w-6xl mx-auto px-6 text-center">
 
@@ -25,8 +59,8 @@ const Doctors = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-             Our Doctors
-          
+            Our Doctors
+
           </motion.h1>
 
           <motion.p
