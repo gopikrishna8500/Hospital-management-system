@@ -79,13 +79,13 @@ app.use("/api/auth", require("./modules/auth/auth.routes"));
 app.use("/api/patients", require("./modules/patients/patients.routes"));
 app.use("/api/billing", require("./routes/billing.routes"));
 app.use(
-  "/api/departments",
-  require("./modules/departments/departments.routes")
+ "/api/departments",
+ require("./modules/departments/departments.routes")
 );
 
 app.use(
-  "/api/doctors",
-  require("./modules/doctors/doctors.routes")
+ "/api/doctors",
+ require("./modules/doctors/doctors.routes")
 );
 /* =========================
    REPORT UPLOAD (FINAL)
