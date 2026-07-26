@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   HeartPulse,
   ShieldCheck,
@@ -19,7 +20,7 @@ const AboutUs = () => {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.8 } },
   };
-
+  const navigate = useNavigate();
   return (
     <div className="bg-gray-50 min-h-screen">
 
@@ -368,8 +369,10 @@ const AboutUs = () => {
             Experience secure, scalable and intelligent hospital management.
           </p>
 
+
           <motion.button
             whileHover={{ scale: 1.05 }}
+            onClick={() => navigate("/contact-us")}
             className="bg-white text-teal-600 px-6 py-3 rounded-md font-semibold"
           >
             Contact Us

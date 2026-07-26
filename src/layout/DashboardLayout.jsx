@@ -98,7 +98,7 @@ const DashboardLayout = () => {
         }`}
       >
         <h2 className="text-2xl font-bold tracking-wide">
-          IdealPathSoftwareSolutions MediTrack
+          IdealPathSoftware Solutions MediTrack
         </h2>
 
         <nav className="space-y-3">

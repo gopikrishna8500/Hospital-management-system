@@ -41,7 +41,7 @@ const AdminDashboard = () => {
         setPatients(patientRes.data.data || []);
 
         // OPTIONAL: If you create appointments API later
-        // const apptRes = await axios.get("https://https://hospital-management-system-3-ne6q.onrender.com/api/appointments", { headers: { Authorization: `Bearer ${token}` }});
+        // const apptRes = await axios.get("https://hospital-management-system-3-ne6q.onrender.com/api/appointments", { headers: { Authorization: `Bearer ${token}` }});
         // setAppointments(apptRes.data.data || []);
 
       } catch (error) {

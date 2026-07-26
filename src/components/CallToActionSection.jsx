@@ -16,7 +16,7 @@ const CallToActionSection = () => {
 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
           <button
-            onClick={() => navigate("/appointments")}
+            onClick={() => navigate("/appointments/form")}
             className="bg-teal-600 hover:bg-teal-500 text-white px-6 py-3 rounded-md font-semibold shadow-lg transition transform hover:scale-105"
           >
             Book Appointment

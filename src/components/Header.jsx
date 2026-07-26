@@ -161,12 +161,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
                         <Link to="/admission-list" className="block px-5 py-3 hover:bg-teal-50">
                           Admission List
                         </Link>
-                        <Link to="/discharge-form" className="block px-5 py-3 hover:bg-teal-50">
-                          Patient Discharge
-                        </Link>
-                        <Link to="/discharge" className="block px-5 py-3 hover:bg-teal-50">
-                          Discharge Details
-                        </Link>
+                        
+                       
                         <Link to="/discharge-list" className="block px-5 py-3 hover:bg-teal-50">
                           Discharge List
                         </Link>
@@ -370,13 +366,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom"; const Header 
                           <Link to="/admission-listt" onClick={() => setIsMobileMenuOpen(false)}>
                             Admission List
                           </Link>
-                          <Link to="/discharge-form" onClick={() => setIsMobileMenuOpen(false)}>
-                            Patient Discharge
-                          </Link>
+                          
 
-                          <Link to="/discharge" onClick={() => setIsMobileMenuOpen(false)}>
-                            Discharge Details
-                          </Link>
+                          
                           <Link to="/discharge-list" onClick={() => setIsMobileMenuOpen(false)}>
                             Discharge List 
                           </Link>

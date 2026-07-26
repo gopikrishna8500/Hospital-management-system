@@ -13,37 +13,37 @@ const FeaturesSection = () => {
       icon: <UserCheck className="w-8 h-8 text-teal-600" />,
       title: "Patient Management",
       description: "Register patients, manage in/out patients, track admissions, visit history, prescriptions, and ward allocations.",
-      link: "/patient-registration"
+      // link: "/patient-registration"
     },
     {
       icon: <FileText className="w-8 h-8 text-teal-600" />,
       title: "Medical Records (EMR)",
       description: "Secure digital storage of diagnostics, lab reports, treatment history, surgeries, and prescriptions for easy access.",
-      link: "/emr"
+      // link: "/emr"
     },
     {
       icon: <CalendarCheck className="w-8 h-8 text-teal-600" />,
       title: "Appointments & Queue",
       description: "Online and walk-in appointment booking, real-time token tracking, and automatic SMS/email reminders.",
-      link: "/appointments"
+      // link: "/appointments"
     },
     {
       icon: <CreditCard className="w-8 h-8 text-teal-600" />,
       title: "Billing & Insurance",
       description: "Manage OP/IP billing, insurance claims, and auto-generated invoices & receipts with full tracking.",
-      link: "/billing"
+      // link: "/billing"
     },
     {
       icon: <Box className="w-8 h-8 text-teal-600" />,
       title: "Inventory & Pharmacy",
       description: "Monitor medicine stock, expiry alerts, prescription integration, and pharmacy operations seamlessly.",
-      link: "/pharmacy"
+      // link: "/pharmacy"
     },
     {
       icon: <Activity className="w-8 h-8 text-teal-600" />,
       title: "Admin Dashboard",
       description: "Get real-time statistics, occupancy rates, patient counts, and generate detailed reports easily.",
-      link: "/admin-dashboard"
+      // link: "/admin-dashboard"
     },
   ];
 

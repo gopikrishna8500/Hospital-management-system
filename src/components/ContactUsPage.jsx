@@ -238,14 +238,7 @@ const ContactUsPage = () => {
         </div>
       </div>
 
-      {/* Scroll Top */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-6 right-6 w-12 h-12 bg-teal-800 hover:bg-teal-600 text-white rounded-full shadow-lg flex items-center justify-center transition"
-      >
-        <ArrowUp size={20} />
-      </button>
-
+    
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-
+import API from "../api";
 const ITEMS_PER_PAGE = 5;
 
 const PatientRecords = () => {
@@ -8,45 +7,31 @@ const PatientRecords = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const token = localStorage.getItem("token");
 
   /* =========================
      Fetch Patients From Backend
   ============================*/
   useEffect(() => {
+
     fetchPatients();
   }, []);
-
   const fetchPatients = async () => {
     try {
-      const res = await axios.get(
-        "https://https://hospital-management-system-3-ne6q.onrender.com/api/patients",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await API.get("/patients");
       setPatients(res.data.data || []);
     } catch (error) {
       console.error("Fetch error:", error);
     }
   };
-
-  /* =========================
-     Delete Patient
-  ============================*/
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this patient?"
     );
+
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(
-        `https://https://hospital-management-system-3-ne6q.onrender.com/api/patients/${id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await API.delete(`/patients/${id}`);
       fetchPatients();
     } catch (error) {
       console.error("Delete error:", error);
@@ -146,11 +131,10 @@ const PatientRecords = () => {
           <button
             key={i}
             onClick={() => setCurrentPage(i + 1)}
-            className={`px-3 py-1 border rounded ${
-              currentPage === i + 1
+            className={`px-3 py-1 border rounded ${currentPage === i + 1
                 ? "bg-teal-600 text-white"
                 : "bg-white"
-            }`}
+              }`}
           >
             {i + 1}
           </button>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import API from "../api";
+
 
 const PatientRegistration = () => {
   const token = localStorage.getItem("token");
@@ -48,16 +49,7 @@ const PatientRegistration = () => {
     }
 
     try {
-      await axios.post(
-        "https://https://hospital-management-system-3-ne6q.onrender.com/api/patients",
-        form,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
+     await API.post("/patients", form);
       alert("Patient Registered Successfully ✅");
 
       setForm({

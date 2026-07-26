@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const mockPatients = [
-  { id: 1, name: "John Doe", room: "101A", doctor: "Dr. Smith" },
-  { id: 2, name: "Sarah Johnson", room: "203B", doctor: "Dr. Adams" },
-];
+
 
 const AdmissionList = () => {
+  const [patients, setPatients] = useState([]);
+
+  useEffect(() => {
+    const data =
+      JSON.parse(localStorage.getItem("admissions")) || [];
+
+    setPatients(data);
+  }, []);
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl p-8">
@@ -24,10 +29,10 @@ const AdmissionList = () => {
             </tr>
           </thead>
           <tbody>
-            {mockPatients.map((patient) => (
+            {patients.map((patient) => (
               <tr key={patient.id} className="border-b">
-                <td className="p-3">{patient.name}</td>
-                <td className="p-3">{patient.room}</td>
+                <td className="p-3">{patient.patientName}</td>
+                <td className="p-3">{patient.roomNumber}</td>
                 <td className="p-3">{patient.doctor}</td>
                 <td className="p-3 text-center">
                   <Link

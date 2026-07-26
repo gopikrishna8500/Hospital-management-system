@@ -48,7 +48,7 @@ import StaffLogin from "./pages/StaffLogin";
 import DoctorDashboard from "./pages/DoctorDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import BillingList from "./pages/BillingList";
-
+import ScrollToTopButton from "./components/ScrollToTopButton";
 const PrivacyPolicyPage = () => {
   return (
     <div className="max-w-4xl mx-auto p-8">
@@ -83,7 +83,7 @@ function App() {
               <StatsSection />
               <TestimonialsSection />
               <CallToActionSection />
-              <FloatingEmergency />
+
               <FAQSection />
             </>
           }
@@ -103,7 +103,7 @@ function App() {
         <Route path="/doctors/:id" element={<DoctorProfile />} />
         <Route path="/admission" element={<Admission />} />
         <Route path="/admission-list" element={<AdmissionList />} />
-        <Route path="/discharge" element={<Discharge />} />
+        <Route path="/discharge/:id" element={<Discharge />} />
         <Route path="/discharge-list" element={<DischargeList />} />
         <Route path="/discharge-form" element={<DischargeForm />} />
         <Route path="/services" element={<ServicesPage />} />
@@ -133,7 +133,8 @@ function App() {
         </Route>
 
       </Routes>
-
+      <FloatingEmergency />
+      <ScrollToTopButton />
       <Footer />
     </Router>
   );
