@@ -49,6 +49,8 @@ import DoctorDashboard from "./pages/DoctorDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import BillingList from "./pages/BillingList";
 import ScrollToTopButton from "./components/ScrollToTopButton";
+import DoctorManagement from "./pages/DoctorManagement";
+import DepartmentManagement from "./pages/DepartmentManagement";
 const PrivacyPolicyPage = () => {
   return (
     <div className="max-w-4xl mx-auto p-8">
@@ -130,6 +132,8 @@ function App() {
           <Route path="beds" element={<BedManagement />} />
           <Route path="billing" element={<Billing />} />
           <Route path="billing-list" element={<BillingList />} />
+          <Route path="doctor-management" element={<DoctorManagement />} />
+          <Route path="department-management" element={<DepartmentManagement />} />
         </Route>
 
       </Routes>

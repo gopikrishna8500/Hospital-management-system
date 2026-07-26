@@ -13,6 +13,8 @@ import {
   Receipt,
   Moon,
   Sun,
+  Stethoscope,
+  Building2,
 } from "lucide-react";
 
 const DashboardLayout = () => {
@@ -40,19 +42,26 @@ const DashboardLayout = () => {
   ========================= */
   let menuItems = [];
 
-  if (role === "admin") {
+   if (role === "admin") {
     menuItems = [
       { name: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/admin-dashboard" },
+
       { name: "Register Patient", icon: <UserPlus size={18} />, path: "/patient-registration" },
+
       { name: "Patient Records", icon: <Users size={18} />, path: "/patient-records" },
+
       { name: "Medical Reports", icon: <FileText size={18} />, path: "/reports" },
+
+      { name: "Doctor Management", icon: <Stethoscope size={18} />, path: "/doctor-management" },
+
+      { name: "Department Management", icon: <Building2 size={18} />, path: "/department-management" },
+
       { name: "Bed Management", icon: <Bed size={18} />, path: "/beds" },
+
       { name: "Appointments", icon: <CalendarCheck size={18} />, path: "/appointments" },
 
-      // ✅ BILLING MAIN
       { name: "Billing", icon: <Receipt size={18} />, path: "/billing" },
 
-      // ✅ NEW: BILLING LIST (INVOICES)
       { name: "Invoices", icon: <Receipt size={18} />, path: "/billing-list" },
     ];
   }
