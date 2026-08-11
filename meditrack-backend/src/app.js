@@ -114,27 +114,118 @@ app.post("/api/reports/:patientId", upload.single("report"), async (req, res) =>
     });
   }
 });
+/* =========================
+REPORT UPLOAD
+========================= */
+
+app.post("/api/reports/:patientId", upload.single("report"), async (req, res) => {
+  try {
+    console.log("FILE RECEIVED:", req.file);
+
+    const { patientId } = req.params;
+
+    if (!req.file) {
+      return res.status(400).json({
+        message: "No file uploaded ❌",
+      });
+    }
+
+    const result = await pool.query(
+      `INSERT INTO reports
+       (patient_id, file_name, file_path)
+       VALUES ($1, $2, $3)
+       RETURNING *`,
+      [
+        patientId,
+        req.file.filename,
+        req.file.path,
+      ]
+    );
+
+    res.json({
+      message: "Report uploaded successfully ✅",
+      data: result.rows[0],
+    });
+
+  } catch (error) {
+    console.error("🔥 FULL ERROR:", error);
+
+    res.status(500).json({
+      message: error.message || "Upload failed ❌",
+    });
+  }
+});
+
 
 /* =========================
-   GET REPORTS
+GET REPORTS FOR ONE PATIENT
 ========================= */
+
 app.get("/api/reports/:patientId", async (req, res) => {
   try {
     const { patientId } = req.params;
 
     const result = await pool.query(
-      "SELECT * FROM reports WHERE patient_id = $1 ORDER BY uploaded_at DESC",
+      `SELECT *
+       FROM reports
+       WHERE patient_id = $1
+       ORDER BY uploaded_at DESC`,
       [patientId]
     );
 
-    res.json({ data: result.rows });
+    res.json({
+      data: result.rows,
+    });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Failed to fetch reports" });
+
+    res.status(500).json({
+      message: "Failed to fetch reports",
+    });
   }
 });
 
+
+/* =========================
+GET ALL MEDICAL REPORTS
+========================= */
+
+app.get("/api/reports", async (req, res) => {
+  try {
+
+    const result = await pool.query(`
+      SELECT
+        reports.id,
+        reports.patient_id,
+        reports.file_name,
+        reports.file_path,
+        reports.uploaded_at,
+        patients.first_name,
+        patients.last_name
+
+      FROM reports
+
+      LEFT JOIN patients
+        ON reports.patient_id = patients.id
+
+      ORDER BY reports.uploaded_at DESC
+    `);
+
+    res.json({
+      data: result.rows,
+    });
+
+  } catch (error) {
+
+    console.error("GET ALL REPORTS ERROR:", error);
+
+    res.status(500).json({
+      message: "Failed to fetch medical reports",
+    });
+
+  }
+});
 /* =========================
    GLOBAL ERROR HANDLER (IMPORTANT)
 ========================= */
