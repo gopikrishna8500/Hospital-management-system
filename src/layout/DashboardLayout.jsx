@@ -15,6 +15,7 @@ import {
   Sun,
   Stethoscope,
   Building2,
+  UserRound,
 } from "lucide-react";
 
 const DashboardLayout = () => {
@@ -42,7 +43,7 @@ const DashboardLayout = () => {
   ========================= */
   let menuItems = [];
 
-   if (role === "admin") {
+  if (role === "admin") {
     menuItems = [
       { name: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/admin-dashboard" },
 
@@ -52,10 +53,16 @@ const DashboardLayout = () => {
 
       { name: "Medical Reports", icon: <FileText size={18} />, path: "/reports" },
 
-      { name: "Doctor Management", icon: <Stethoscope size={18} />, path: "/doctor-management" },
-
-      { name: "Department Management", icon: <Building2 size={18} />, path: "/department-management" },
-
+      {
+        name: "Doctors",
+        path: "/admin-doctors",
+        icon: <UserRound size={18} />,
+      },
+      {
+        name: "Departments",
+        path: "/admin-departments",
+        icon: <Building2 size={18} />,
+      },
       { name: "Bed Management", icon: <Bed size={18} />, path: "/beds" },
 
       { name: "Appointments", icon: <CalendarCheck size={18} />, path: "/appointments" },
@@ -94,17 +101,15 @@ const DashboardLayout = () => {
 
   return (
     <div
-      className={`flex min-h-screen transition-all duration-300 ${
-        darkMode
-          ? "bg-gray-900 text-white"
-          : "bg-gray-100 text-gray-900"
-      }`}
+      className={`flex min-h-screen transition-all duration-300 ${darkMode
+        ? "bg-gray-900 text-white"
+        : "bg-gray-100 text-gray-900"
+        }`}
     >
       {/* Sidebar */}
       <div
-        className={`bg-teal-900 text-white w-64 p-6 space-y-6 fixed md:relative h-full z-40 transition-transform duration-300 ${
-          open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-        }`}
+        className={`bg-teal-900 text-white w-64 p-6 space-y-6 fixed md:relative h-full z-40 transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          }`}
       >
         <h2 className="text-2xl font-bold tracking-wide">
           IdealPathSoftware Solutions MediTrack
@@ -116,10 +121,9 @@ const DashboardLayout = () => {
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-3 p-3 rounded-lg transition-all duration-200 ${
-                  isActive
-                    ? "bg-teal-600 shadow-md"
-                    : "hover:bg-teal-800"
+                `flex items-center gap-3 p-3 rounded-lg transition-all duration-200 ${isActive
+                  ? "bg-teal-600 shadow-md"
+                  : "hover:bg-teal-800"
                 }`
               }
               onClick={() => setOpen(false)}

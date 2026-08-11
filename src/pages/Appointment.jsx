@@ -1,15 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { doctorsData } from "./DoctorCard";
-// import { doctorsData } from "../components/DoctorCard";
 import API from "../api";
 
 const Appointment = () => {
   const { id } = useParams();
 
-  const doctor = doctorsData.find(
-    (doc) => doc.id === Number(id)
-  );
+  const [doctor, setDoctor] = useState(null);
 
   const [form, setForm] = useState({
     patient_name: "",
@@ -20,8 +16,31 @@ const Appointment = () => {
 
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    loadDoctor();
+  }, []);
+
+  const loadDoctor = async () => {
+    try {
+      const res = await API.get("/doctors");
+
+      const selectedDoctor = res.data.find(
+        (doc) => doc.id === Number(id)
+      );
+
+      setDoctor(selectedDoctor);
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   if (!doctor) {
-    return <div className="p-10">Doctor Not Found</div>;
+    return (
+      <div className="p-10 text-center">
+        Loading Doctor...
+      </div>
+    );
   }
 
   const handleChange = (e) => {
@@ -49,8 +68,8 @@ const Appointment = () => {
         patient_id: null,
         patient_name: form.patient_name,
         email: form.email,
-        doctor_name: doctor.name,
-        department: doctor.specialization,
+        doctor_name: doctor.doctor_name,
+        department: doctor.department_name,
         appointment_date: form.appointment_date,
         appointment_time: form.appointment_time,
       });
@@ -65,7 +84,7 @@ const Appointment = () => {
       });
 
     } catch (err) {
-      console.error(err);
+      console.log(err);
       alert("Booking Failed");
     }
 
@@ -74,15 +93,12 @@ const Appointment = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4">
-      <div className="max-w-xl mx-auto bg-white shadow-xl rounded-xl p-8">
 
-        <h2 className="text-3xl font-bold text-teal-700 mb-2">
+      <div className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-8">
+
+        <h2 className="text-3xl font-bold text-teal-700 mb-6">
           Book Appointment
         </h2>
-
-        <p className="text-gray-600 mb-6">
-          {doctor.name}
-        </p>
 
         <input
           type="text"
@@ -103,16 +119,14 @@ const Appointment = () => {
         />
 
         <input
-          type="text"
-          value={doctor.name}
           readOnly
+          value={doctor.doctor_name}
           className="w-full border rounded-lg p-3 mb-4 bg-gray-100"
         />
 
         <input
-          type="text"
-          value={doctor.specialization}
           readOnly
+          value={doctor.department_name}
           className="w-full border rounded-lg p-3 mb-4 bg-gray-100"
         />
 
@@ -141,6 +155,7 @@ const Appointment = () => {
         </button>
 
       </div>
+
     </div>
   );
 };

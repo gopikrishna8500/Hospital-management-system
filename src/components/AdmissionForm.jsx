@@ -1,19 +1,5 @@
 import React, { useState } from "react";
-import { doctorsData } from "../data/doctorsData";
-const departments = [
-  "General Medicine",
-  "Cardiology",
-  "Neurology",
-  "Orthopedics",
-  "Pediatrics",
-  "Gynecology",
-  "Oncology",
-  "Emergency",
-  "Radiology",
-  "Pathology",
-  "Pharmacy",
-  "ICU",
-];
+
 const AdmissionForm = () => {
   const [formData, setFormData] = useState({
     patientName: "",
@@ -35,32 +21,8 @@ const AdmissionForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const admissions =
-      JSON.parse(localStorage.getItem("admissions")) || [];
-
-    admissions.push({
-      id: Date.now(),
-      ...formData,
-    });
-
-    localStorage.setItem(
-      "admissions",
-      JSON.stringify(admissions)
-    );
-
+    console.log("Admission Data:", formData);
     alert("Patient Admitted Successfully!");
-
-    setFormData({
-      patientName: "",
-      age: "",
-      gender: "",
-      department: "",
-      doctor: "",
-      roomNumber: "",
-      admissionDate: "",
-      symptoms: "",
-    });
   };
 
   return (
@@ -76,40 +38,8 @@ const AdmissionForm = () => {
         <option>Other</option>
       </select>
 
-      <input
-        type="text"
-        name="department"
-        value={formData.department}
-        readOnly
-        className="input bg-gray-100"
-      />
-      <select
-        name="doctor"
-        value={formData.doctor}
-        onChange={(e) => {
-          const selectedDoctor = doctorsData.find(
-            (doc) => doc.name === e.target.value
-          );
-
-          setFormData({
-            ...formData,
-            doctor: selectedDoctor.name,
-            department: selectedDoctor.specialization,
-          });
-        }}
-        className="input"
-        required
-      >
-        <option value="">Select Doctor</option>
-
-        {doctorsData
-          .filter((doctor) => doctor.availability === "Available")
-          .map((doctor) => (
-            <option key={doctor.id} value={doctor.name}>
-              {doctor.name} ({doctor.specialization})
-            </option>
-          ))}
-      </select>
+      <input type="text" name="department" placeholder="Department" onChange={handleChange} className="input" />
+      <input type="text" name="doctor" placeholder="Assigned Doctor" onChange={handleChange} className="input" />
       <input type="text" name="roomNumber" placeholder="Room Number" onChange={handleChange} className="input" />
       <input type="date" name="admissionDate" onChange={handleChange} className="input" />
 
