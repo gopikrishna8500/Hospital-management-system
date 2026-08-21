@@ -46,8 +46,7 @@ if (!fs.existsSync(uploadDir)) {
 SERVE UPLOADED FILES
 ========================= */
 
-app.use("/uploads", express.static(uploadDir));
-
+app.use("/uploads", express.static(path.resolve(uploadDir)));
 /* =========================
 MULTER CONFIGURATION
 ========================= */

@@ -121,11 +121,6 @@ const DashboardLayout = () => {
         path: "/billing",
       },
 
-      {
-        name: "Invoices",
-        icon: <Receipt size={18} />,
-        path: "/billing-list",
-      },
     ];
   }
 
@@ -189,11 +184,6 @@ const DashboardLayout = () => {
         path: "/appointments",
       },
 
-      {
-        name: "Invoices",
-        icon: <Receipt size={18} />,
-        path: "/billing-list",
-      },
     ];
   }
 
@@ -280,7 +270,7 @@ const DashboardLayout = () => {
 
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className="flex items-center gap-2 mt-8 text-yellow-300 hover:text-yellow-400 transition"
+          className="flex items-center gap-2 mt-8 text-black hover:text-slate-900 transition"
         >
           {darkMode ? (
             <Sun size={18} />
@@ -297,7 +287,7 @@ const DashboardLayout = () => {
 
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 mt-4 p-3 rounded-lg text-red-300 hover:bg-red-900 hover:text-red-100 transition"
+          className="w-full flex items-center gap-3 mt-4 p-3 rounded-lg text-red-600 hover:bg-red-900 hover:text-red-100 transition"
         >
           <LogOut size={18} />
 

@@ -141,13 +141,20 @@ const MedicalReports = () => {
   /* =========================
      OPEN REPORT
   ========================= */
-  const openReport = (filePath) => {
+  const openReport = (report) => {
+    if (!report.file_url) {
+      alert("Report URL is not available");
+      console.error("Missing file_url:", report);
+      return;
+    }
 
-    const filename = filePath.split(/[\\/]/).pop();
+    console.log("Opening report:", report.file_url);
 
-    const reportUrl = `${API.defaults.baseURL}/../uploads/${filename}`;
-
-    window.open(reportUrl, "_blank");
+    window.open(
+      report.file_url,
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
 
   return (
@@ -316,8 +323,8 @@ const MedicalReports = () => {
 
                         {report.uploaded_at
                           ? new Date(
-                              report.uploaded_at
-                            ).toLocaleString()
+                            report.uploaded_at
+                          ).toLocaleString()
                           : "-"}
 
                       </td>
@@ -325,9 +332,7 @@ const MedicalReports = () => {
                       <td className="p-3 text-center">
 
                         <button
-                          onClick={() =>
-                            openReport(report.file_path)
-                          }
+                          onClick={() => openReport(report)}
                           className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md"
                         >
                           View Report
