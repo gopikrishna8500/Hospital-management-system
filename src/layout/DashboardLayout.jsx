@@ -268,7 +268,7 @@ const DashboardLayout = () => {
             DARK MODE
         ===================================== */}
 
-        <button
+        {/* <button
           onClick={() => setDarkMode(!darkMode)}
           className="flex items-center gap-2 mt-8 text-black hover:text-slate-900 transition"
         >
@@ -279,7 +279,7 @@ const DashboardLayout = () => {
           )}
 
           {darkMode ? "Light Mode" : "Dark Mode"}
-        </button>
+        </button> */}
 
         {/* =====================================
             LOGOUT

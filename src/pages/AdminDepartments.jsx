@@ -86,14 +86,12 @@ const AdminDepartments = () => {
   };
 
   return (
-    <div className="p-8">
-
+<div className="p-8 bg-gray-100 dark:bg-gray-950 min-h-screen text-gray-900 dark:text-white">
       <h2 className="text-3xl font-bold text-teal-700 mb-8">
         Department Management
       </h2>
 
-      <div className="grid md:grid-cols-3 gap-4">
-
+<div className="grid md:grid-cols-3 gap-4 bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
         <input
           className="input"
           placeholder="Department Name"
@@ -127,8 +125,7 @@ const AdminDepartments = () => {
         Add Department
       </button>
 
-      <table className="w-full mt-10">
-
+<table className="w-full mt-10 bg-white dark:bg-gray-900 rounded-xl overflow-hidden">
         <thead className="bg-teal-600 text-white">
 
           <tr>

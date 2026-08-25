@@ -29,20 +29,38 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const patientRes = await axios.get(
-        "https://hospital-management-system-3-ne6q.onrender.com/api/patients",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const [patientRes, appointmentRes] = await Promise.all([
+          axios.get(
+            "https://hospital-management-system-3-ne6q.onrender.com/api/patients",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          ),
 
+          axios.get(
+            "https://hospital-management-system-3-ne6q.onrender.com/api/appointments",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          ),
+        ]);
+
+        // Patients
         setPatients(patientRes.data.data || []);
 
-        // OPTIONAL: If you create appointments API later
-        // const apptRes = await axios.get("https://hospital-management-system-3-ne6q.onrender.com/api/appointments", { headers: { Authorization: `Bearer ${token}` }});
-        // setAppointments(apptRes.data.data || []);
+        // Appointments
+        const appointmentData =
+          appointmentRes.data.data ||
+          appointmentRes.data ||
+          [];
+
+        setAppointments(appointmentData);
+
+        console.log("APPOINTMENTS:", appointmentData);
 
       } catch (error) {
         console.error("Dashboard error:", error);
