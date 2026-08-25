@@ -83,7 +83,6 @@ const Billing = () => {
     setMessage("");
     setError("");
 
-    // Validation
     if (!selectedPatient) {
       setError("Please select a patient.");
       return;
@@ -108,32 +107,30 @@ const Billing = () => {
       setGenerating(true);
 
       const patientName =
-        `${selectedPatientData.first_name || ""} ${
-          selectedPatientData.last_name || ""
-        }`.trim();
+        `${selectedPatientData.first_name || ""} ${selectedPatientData.last_name || ""
+          }`.trim();
 
-      // ================================
-      // API REQUEST
-      // ================================
       const response = await API.post("/billing", {
         patient_id: selectedPatientData.id,
         patient_name: patientName,
         amount: Number(amount),
       });
 
-      console.log("Invoice Created:", response.data);
+      console.log(
+        "Invoice Created:",
+        response.data
+      );
 
-      // Success
-      setMessage("Invoice generated successfully!");
+      setMessage(
+        "Invoice generated successfully!"
+      );
 
-      // Clear form
       setSelectedPatient("");
       setAmount("");
 
-      // Navigate after short delay
-      setTimeout(() => {
-        navigate("/billing-list");
-      }, 1000);
+      // Go directly to invoice list
+      navigate("/billing-list");
+
     } catch (err) {
       console.error(
         "Billing error:",
@@ -142,8 +139,9 @@ const Billing = () => {
 
       setError(
         err.response?.data?.message ||
-          "Failed to generate invoice. Please try again."
+        "Failed to generate invoice. Please try again."
       );
+
     } finally {
       setGenerating(false);
     }
@@ -273,8 +271,8 @@ const Billing = () => {
                       {loadingPatients
                         ? "Loading patients..."
                         : patients.length === 0
-                        ? "No patients available"
-                        : "Select a patient"}
+                          ? "No patients available"
+                          : "Select a patient"}
                     </option>
 
                     {patients.map((patient) => (
