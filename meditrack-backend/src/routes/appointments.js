@@ -80,8 +80,11 @@ router.post("/", async (req, res) => {
       ]
     );
 
+    console.log("Appointment saved to database ✅");
+    console.log("Appointment ID:", result.rows[0].id);
+
     /* =========================
-       PATIENT EMAIL TEMPLATE
+       PATIENT EMAIL
     ========================= */
 
     const patientEmailHTML = `
@@ -150,7 +153,7 @@ router.post("/", async (req, res) => {
     `;
 
     /* =========================
-       PATIENT WHATSAPP MESSAGE
+       WHATSAPP MESSAGE
     ========================= */
 
     const whatsappMessage = `
@@ -177,78 +180,103 @@ MediTrack Hospital
        SEND PATIENT EMAIL
     ========================= */
 
-    sendMail(
-      email,
-      "MediTrack Hospital | Appointment Confirmation",
-      patientEmailHTML
-    ).catch((err) => {
-      console.error("Patient Email Error:", err);
-    });
+    try {
+      await sendMail(
+        email,
+        "MediTrack Hospital | Appointment Confirmation",
+        patientEmailHTML
+      );
+
+      console.log("Patient email completed successfully ✅");
+
+    } catch (emailError) {
+
+      console.error("Patient Email Failed ❌");
+      console.error("Email:", email);
+      console.error("Error:", emailError.message);
+    }
 
     /* =========================
        SEND PATIENT WHATSAPP
     ========================= */
 
-    sendWhatsApp(
-      mobile,
-      whatsappMessage
-    ).catch((err) => {
-      console.error("WhatsApp Error:", err);
-    });
+    try {
+      await sendWhatsApp(
+        mobile,
+        whatsappMessage
+      );
+
+      console.log("Patient WhatsApp completed successfully ✅");
+
+    } catch (whatsappError) {
+
+      console.error("Patient WhatsApp Failed ❌");
+      console.error("Mobile:", mobile);
+      console.error("Error:", whatsappError.message);
+    }
 
     /* =========================
-       SEND ADMIN EMAIL
+       ADMIN EMAIL
     ========================= */
 
-    sendMail(
-      process.env.EMAIL_USER,
-      "MediTrack | New Appointment Alert",
-      `
-        <h2>New Appointment</h2>
+    try {
+      await sendMail(
+        process.env.EMAIL_USER,
+        "MediTrack | New Appointment Alert",
+        `
+          <h2>New Appointment</h2>
 
-        <p>
-          <strong>Patient:</strong> ${patient_name}
-        </p>
+          <p>
+            <strong>Patient:</strong> ${patient_name}
+          </p>
 
-        <p>
-          <strong>Mobile:</strong> ${mobile}
-        </p>
+          <p>
+            <strong>Mobile:</strong> ${mobile}
+          </p>
 
-        <p>
-          <strong>Email:</strong> ${email}
-        </p>
+          <p>
+            <strong>Email:</strong> ${email}
+          </p>
 
-        <p>
-          <strong>Doctor:</strong> ${doctor_name}
-        </p>
+          <p>
+            <strong>Doctor:</strong> ${doctor_name}
+          </p>
 
-        <p>
-          <strong>Department:</strong> ${department}
-        </p>
+          <p>
+            <strong>Department:</strong> ${department}
+          </p>
 
-        <p>
-          <strong>Date:</strong> ${appointment_date}
-        </p>
+          <p>
+            <strong>Date:</strong> ${appointment_date}
+          </p>
 
-        <p>
-          <strong>Time:</strong> ${appointment_time}
-        </p>
-      `
-    ).catch((err) => {
-      console.error("Admin Email Error:", err);
-    });
+          <p>
+            <strong>Time:</strong> ${appointment_time}
+          </p>
+        `
+      );
+
+      console.log("Admin email completed successfully ✅");
+
+    } catch (adminEmailError) {
+
+      console.error("Admin Email Failed ❌");
+      console.error("Error:", adminEmailError.message);
+    }
 
     /* =========================
        RESPONSE
     ========================= */
 
-    res.json({
-      message: "Appointment booked successfully",
+    res.status(201).json({
+      message: "Appointment booked successfully ✅",
       data: result.rows[0],
     });
 
   } catch (err) {
-    console.error("APPOINTMENT ERROR:", err);
+
+    console.error("APPOINTMENT ERROR ❌");
+    console.error(err);
 
     res.status(500).json({
       message: err.message || "Booking failed",
@@ -258,11 +286,12 @@ MediTrack Hospital
 
 
 /* =========================
-   GET ALL APPOINTMENTS (ADMIN)
+   GET ALL APPOINTMENTS
 ========================= */
 
 router.get("/", async (req, res) => {
   try {
+
     const result = await pool.query(
       "SELECT * FROM appointments ORDER BY appointment_date DESC"
     );
@@ -272,6 +301,7 @@ router.get("/", async (req, res) => {
     });
 
   } catch (err) {
+
     console.error("FETCH ERROR:", err);
 
     res.status(500).json({
