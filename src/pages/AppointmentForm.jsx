@@ -10,6 +10,7 @@ const AppointmentForm = () => {
     patient_id: "",
     patient_name: "",
     email: "",
+    mobile: "",
     doctor_name: "",
     department: "",
     appointment_date: "",
@@ -46,6 +47,7 @@ const AppointmentForm = () => {
     if (
       !form.patient_name ||
       !form.email ||
+      !form.mobile ||
       !form.doctor_name ||
       !form.department ||
       !form.appointment_date ||
@@ -66,6 +68,7 @@ const AppointmentForm = () => {
         patient_id: "",
         patient_name: "",
         email: "",
+        mobile: "",
         doctor_name: "",
         department: "",
         appointment_date: "",
@@ -114,7 +117,15 @@ const AppointmentForm = () => {
         onChange={handleChange}
         className="border p-2 w-full mb-2 rounded"
       />
-    
+      <input
+        type="tel"
+        name="mobile"
+        placeholder="Mobile Number"
+        value={form.mobile}
+        onChange={handleChange}
+        className="border p-2 w-full mb-2 rounded"
+        required
+      />
 
       {/* ✅ DOCTOR DROPDOWN */}
       <select

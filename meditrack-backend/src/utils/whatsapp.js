@@ -7,15 +7,37 @@ const client = twilio(
 
 const sendWhatsApp = async (mobile, message) => {
   try {
-    const response = await client.messages.create({
-      from: process.env.TWILIO_WHATSAPP_NUMBER, // whatsapp:+14155238886
-      to: `whatsapp:+91${mobile}`,
+    if (!mobile) {
+      throw new Error("Mobile number is required");
+    }
+
+    let phone = mobile.replace(/\D/g, "");
+
+    if (phone.startsWith("0")) {
+      phone = "91" + phone.substring(1);
+    }
+
+    if (phone.length === 10) {
+      phone = "91" + phone;
+    }
+
+    if (phone.length !== 12 || !phone.startsWith("91")) {
+      throw new Error("Invalid Indian mobile number");
+    }
+
+    const result = await client.messages.create({
+      from: process.env.TWILIO_WHATSAPP_FROM,
+      to: `whatsapp:+${phone}`,
       body: message,
     });
 
-    console.log("WhatsApp Sent:", response.sid);
+    console.log("WhatsApp sent successfully:", result.sid);
+
+    return result;
+
   } catch (error) {
     console.error("WhatsApp Error:", error.message);
+    throw error;
   }
 };
 

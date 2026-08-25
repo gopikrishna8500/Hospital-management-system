@@ -26,6 +26,7 @@ const Appointments = () => {
         <thead className="bg-teal-600 text-white">
           <tr>
             <th className="p-2">Patient</th>
+            <th className="p-2">Mobile</th>
             <th className="p-2">Email</th>
             <th className="p-2">Doctor</th>
             <th className="p-2">Department</th>
@@ -38,9 +39,21 @@ const Appointments = () => {
           {appointments.length > 0 ? (
             appointments.map((a) => (
               <tr key={a.id} className="text-center border-b">
-                <td className="p-2">{a.patient_name}</td>
-                <td className="p-2">{a.email}</td>
-                <td className="p-2">{a.doctor_name}</td>
+                <td className="p-2">
+                  {a.patient_name}
+                </td>
+
+                <td className="p-2">
+                  {a.mobile}
+                </td>
+
+                <td className="p-2">
+                  {a.email}
+                </td>
+
+                <td className="p-2">
+                  {a.doctor_name}
+                </td>
                 <td className="p-2">{a.department}</td>
                 <td className="p-2">{a.appointment_date}</td>
                 <td className="p-2">{a.appointment_time}</td>
@@ -48,8 +61,8 @@ const Appointments = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="6" className="p-4 text-center">
-                No appointments found
+              <td colSpan="7" className="p-4 text-center">           
+                     No appointments found
               </td>
             </tr>
           )}

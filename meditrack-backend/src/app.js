@@ -7,7 +7,7 @@ const path = require("path");
 const multer = require("multer");
 const fs = require("fs");
 
-const appointmentRoutes = require("./routes/appointments.routes");
+const appointmentRoutes = require("./routes/appointments");
 
 dotenv.config();
 
