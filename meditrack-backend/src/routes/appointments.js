@@ -179,7 +179,7 @@ MediTrack Hospital
 
     try {
       await sendMail(
-        "dgk8500@gmail.com",
+        "gopikrishnadindu@gmail.com",
         "MediTrack | New Appointment Alert",
         `
         <h2>New Appointment</h2>
