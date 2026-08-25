@@ -1,163 +1,75 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import API from "../api";
 
-const Appointment = () => {
-  const { id } = useParams();
-
-  const [doctor, setDoctor] = useState(null);
-
-  const [form, setForm] = useState({
-    patient_name: "",
-    email: "",
-    appointment_date: "",
-    appointment_time: "",
-  });
-
-  const [loading, setLoading] = useState(false);
+const Appointments = () => {
+  const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    loadDoctor();
+    fetchAppointments();
   }, []);
 
-  const loadDoctor = async () => {
+  const fetchAppointments = async () => {
     try {
-      const res = await API.get("/doctors");
-
-      const selectedDoctor = res.data.find(
-        (doc) => doc.id === Number(id)
-      );
-
-      setDoctor(selectedDoctor);
-
+      const res = await API.get("/appointments");
+      setAppointments(res.data.data || []);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      alert("Failed to load appointments");
     }
-  };
-
-  if (!doctor) {
-    return (
-      <div className="p-10 text-center">
-        Loading Doctor...
-      </div>
-    );
-  }
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async () => {
-    if (
-      !form.patient_name ||
-      !form.email ||
-      !form.appointment_date ||
-      !form.appointment_time
-    ) {
-      alert("Please fill all fields");
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      await API.post("/appointments", {
-        patient_id: null,
-        patient_name: form.patient_name,
-        email: form.email,
-        doctor_name: doctor.doctor_name,
-        department: doctor.department_name,
-        appointment_date: form.appointment_date,
-        appointment_time: form.appointment_time,
-      });
-
-      alert("Appointment Booked Successfully ✅");
-
-      setForm({
-        patient_name: "",
-        email: "",
-        appointment_date: "",
-        appointment_time: "",
-      });
-
-    } catch (err) {
-      console.log(err);
-      alert("Booking Failed");
-    }
-
-    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4">
+    <div className="bg-white p-6 rounded-xl shadow-md">
+      <h2 className="text-2xl font-bold mb-4">Appointments</h2>
 
-      <div className="max-w-xl mx-auto bg-white rounded-xl shadow-lg p-8">
+      <table className="w-full border">
+        <thead className="bg-teal-600 text-white">
+          <tr>
+            <th className="p-2">Patient</th>
+            <th className="p-2">Mobile</th>
+            <th className="p-2">Email</th>
+            <th className="p-2">Doctor</th>
+            <th className="p-2">Department</th>
+            <th className="p-2">Date</th>
+            <th className="p-2">Time</th>
+          </tr>
+        </thead>
 
-        <h2 className="text-3xl font-bold text-teal-700 mb-6">
-          Book Appointment
-        </h2>
+        <tbody>
+          {appointments.length > 0 ? (
+            appointments.map((a) => (
+              <tr key={a.id} className="text-center border-b">
+                <td className="p-2">
+                  {a.patient_name}
+                </td>
 
-        <input
-          type="text"
-          name="patient_name"
-          placeholder="Patient Name"
-          value={form.patient_name}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3 mb-4"
-        />
+                <td className="p-2">
+                  {a.mobile}
+                </td>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={form.email}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3 mb-4"
-        />
+                <td className="p-2">
+                  {a.email}
+                </td>
 
-        <input
-          readOnly
-          value={doctor.doctor_name}
-          className="w-full border rounded-lg p-3 mb-4 bg-gray-100"
-        />
-
-        <input
-          readOnly
-          value={doctor.department_name}
-          className="w-full border rounded-lg p-3 mb-4 bg-gray-100"
-        />
-
-        <input
-          type="date"
-          name="appointment_date"
-          value={form.appointment_date}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3 mb-4"
-        />
-
-        <input
-          type="time"
-          name="appointment_time"
-          value={form.appointment_time}
-          onChange={handleChange}
-          className="w-full border rounded-lg p-3 mb-6"
-        />
-
-        <button
-          onClick={handleSubmit}
-          disabled={loading}
-          className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700"
-        >
-          {loading ? "Booking..." : "Confirm Appointment"}
-        </button>
-
-      </div>
-
+                <td className="p-2">
+                  {a.doctor_name}
+                </td>
+                <td className="p-2">{a.department}</td>
+                <td className="p-2">{a.appointment_date}</td>
+                <td className="p-2">{a.appointment_time}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" className="p-4 text-center">           
+                     No appointments found
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default Appointment;
+export default Appointments;
