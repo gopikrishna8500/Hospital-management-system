@@ -229,7 +229,7 @@ const Billing = () => {
               {/* SUCCESS MESSAGE */}
               {message && (
                 <div className="mb-5 flex items-center gap-3 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0" />
+                  <CheckCircle className="w-5 h-5 shrink-0" />
 
                   <span className="text-sm font-medium">
                     {message}
@@ -240,7 +240,7 @@ const Billing = () => {
               {/* ERROR MESSAGE */}
               {error && (
                 <div className="mb-5 flex items-center gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                  <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                  <AlertCircle className="w-5 h-5 shrink-0" />
 
                   <span className="text-sm font-medium">
                     {error}
@@ -525,7 +525,7 @@ const Billing = () => {
               {/* Info */}
               <div className="mt-5 flex gap-3 text-xs text-gray-500">
 
-                <AlertCircle className="w-4 h-4 flex-shrink-0 text-gray-400" />
+                <AlertCircle className="w-4 h-4 shrink-0 text-gray-400" />
 
                 <p>
                   The invoice will be saved to the billing system
