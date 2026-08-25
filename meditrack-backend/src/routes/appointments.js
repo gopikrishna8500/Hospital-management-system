@@ -5,10 +5,6 @@ const pool = require("../config/db");
 const sendMail = require("../utils/mailer");
 const sendWhatsApp = require("../utils/whatsapp");
 
-/* =========================
-   CREATE APPOINTMENT (PUBLIC)
-========================= */
-
 router.post("/", async (req, res) => {
   try {
     let {
@@ -21,10 +17,6 @@ router.post("/", async (req, res) => {
       appointment_date,
       appointment_time,
     } = req.body;
-
-    /* =========================
-       VALIDATION
-    ========================= */
 
     if (
       !patient_name ||
@@ -40,19 +32,11 @@ router.post("/", async (req, res) => {
       });
     }
 
-    /* =========================
-       SAFE PATIENT ID
-    ========================= */
-
     if (!patient_id || isNaN(patient_id)) {
       patient_id = null;
     } else {
       patient_id = parseInt(patient_id);
     }
-
-    /* =========================
-       SAVE TO DATABASE
-    ========================= */
 
     const result = await pool.query(
       `INSERT INTO appointments
@@ -83,42 +67,25 @@ router.post("/", async (req, res) => {
     console.log("Appointment saved to database ✅");
     console.log("Appointment ID:", result.rows[0].id);
 
-    /* =========================
-       PATIENT EMAIL
-    ========================= */
-
     const patientEmailHTML = `
-      <div style="
-        font-family: Arial, sans-serif;
-        padding: 20px;
-        background: #f8fafc;
-      ">
-
-        <div style="
-          max-width: 600px;
-          margin: auto;
-          background: white;
-          padding: 25px;
-          border-radius: 10px;
-        ">
+      <div style="font-family:Arial,sans-serif;background:#f8fafc;padding:30px;">
+        <div style="max-width:600px;margin:auto;background:white;padding:30px;border-radius:12px;">
 
           <h2 style="color:#0d9488;">
             MediTrack Hospital
           </h2>
 
-          <h3>
-            Appointment Confirmation
-          </h3>
+          <h3>Appointment Confirmation ✅</h3>
 
           <p>
             Dear <strong>${patient_name}</strong>,
           </p>
 
           <p>
-            Your appointment has been booked successfully.
+            Your appointment has been successfully booked.
           </p>
 
-          <hr />
+          <hr>
 
           <p>
             <strong>Doctor:</strong> ${doctor_name}
@@ -140,21 +107,16 @@ router.post("/", async (req, res) => {
             Please arrive 10 minutes before your appointment.
           </p>
 
-          <br />
+          <br>
 
           <p>
-            Thank you,<br />
+            Thank you,<br>
             <strong>MediTrack Hospital</strong>
           </p>
 
         </div>
-
       </div>
     `;
-
-    /* =========================
-       WHATSAPP MESSAGE
-    ========================= */
 
     const whatsappMessage = `
 MediTrack Hospital 🏥
@@ -177,7 +139,7 @@ MediTrack Hospital
 `;
 
     /* =========================
-       SEND PATIENT EMAIL
+       PATIENT EMAIL
     ========================= */
 
     try {
@@ -189,15 +151,13 @@ MediTrack Hospital
 
       console.log("Patient email completed successfully ✅");
 
-    } catch (emailError) {
-
+    } catch (error) {
       console.error("Patient Email Failed ❌");
-      console.error("Email:", email);
-      console.error("Error:", emailError.message);
+      console.error(error.message);
     }
 
     /* =========================
-       SEND PATIENT WHATSAPP
+       WHATSAPP
     ========================= */
 
     try {
@@ -208,11 +168,9 @@ MediTrack Hospital
 
       console.log("Patient WhatsApp completed successfully ✅");
 
-    } catch (whatsappError) {
-
+    } catch (error) {
       console.error("Patient WhatsApp Failed ❌");
-      console.error("Mobile:", mobile);
-      console.error("Error:", whatsappError.message);
+      console.error(error.message);
     }
 
     /* =========================
@@ -224,74 +182,43 @@ MediTrack Hospital
         process.env.EMAIL_USER,
         "MediTrack | New Appointment Alert",
         `
-          <h2>New Appointment</h2>
+        <h2>New Appointment</h2>
 
-          <p>
-            <strong>Patient:</strong> ${patient_name}
-          </p>
-
-          <p>
-            <strong>Mobile:</strong> ${mobile}
-          </p>
-
-          <p>
-            <strong>Email:</strong> ${email}
-          </p>
-
-          <p>
-            <strong>Doctor:</strong> ${doctor_name}
-          </p>
-
-          <p>
-            <strong>Department:</strong> ${department}
-          </p>
-
-          <p>
-            <strong>Date:</strong> ${appointment_date}
-          </p>
-
-          <p>
-            <strong>Time:</strong> ${appointment_time}
-          </p>
+        <p><strong>Patient:</strong> ${patient_name}</p>
+        <p><strong>Mobile:</strong> ${mobile}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Doctor:</strong> ${doctor_name}</p>
+        <p><strong>Department:</strong> ${department}</p>
+        <p><strong>Date:</strong> ${appointment_date}</p>
+        <p><strong>Time:</strong> ${appointment_time}</p>
         `
       );
 
       console.log("Admin email completed successfully ✅");
 
-    } catch (adminEmailError) {
-
+    } catch (error) {
       console.error("Admin Email Failed ❌");
-      console.error("Error:", adminEmailError.message);
+      console.error(error.message);
     }
-
-    /* =========================
-       RESPONSE
-    ========================= */
 
     res.status(201).json({
       message: "Appointment booked successfully ✅",
       data: result.rows[0],
     });
 
-  } catch (err) {
-
+  } catch (error) {
     console.error("APPOINTMENT ERROR ❌");
-    console.error(err);
+    console.error(error);
 
     res.status(500).json({
-      message: err.message || "Booking failed",
+      message: error.message || "Booking failed",
     });
   }
 });
 
 
-/* =========================
-   GET ALL APPOINTMENTS
-========================= */
-
 router.get("/", async (req, res) => {
   try {
-
     const result = await pool.query(
       "SELECT * FROM appointments ORDER BY appointment_date DESC"
     );
@@ -300,9 +227,8 @@ router.get("/", async (req, res) => {
       data: result.rows,
     });
 
-  } catch (err) {
-
-    console.error("FETCH ERROR:", err);
+  } catch (error) {
+    console.error("FETCH ERROR:", error);
 
     res.status(500).json({
       message: "Failed to fetch appointments",
