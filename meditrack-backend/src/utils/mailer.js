@@ -1,41 +1,25 @@
-// const nodemailer = require("nodemailer");
-
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS,
-//   },
-// });
-
-// const sendMail = async (to, subject, htmlContent) => {
-//   await transporter.sendMail({
-//     from: `"MediTrack Hospital" <${process.env.EMAIL_USER}>`,
-//     to,
-//     subject,
-//     html: htmlContent,
-//   });
-
-//   console.log(`Email sent successfully to ${to} ✅`);
-// };
-
-// module.exports = sendMail;
-
-
-
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
+
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
+
+  logger: true,
+  debug: true,
 });
 
 const sendMail = async (to, subject, htmlContent) => {
   try {
+    console.log("=================================");
+    console.log("GMAIL: Sending email...");
+    console.log("GMAIL Recipient:", to);
+    console.log("GMAIL Sender:", process.env.EMAIL_USER);
+    console.log("=================================");
+
     const info = await transporter.sendMail({
       from: `"MediTrack Hospital" <${process.env.EMAIL_USER}>`,
       to,
@@ -43,18 +27,40 @@ const sendMail = async (to, subject, htmlContent) => {
       html: htmlContent,
     });
 
-    console.log("Email sent successfully ✅");
-    console.log("Email recipient:", to);
+    console.log("=================================");
+    console.log("EMAIL SENT SUCCESSFULLY ✅");
+    console.log("Recipient:", to);
     console.log("Message ID:", info.messageId);
+    console.log("Response:", info.response);
+    console.log("=================================");
 
     return info;
-  } catch (error) {
-    console.error("EMAIL ERROR ❌");
-    console.error(error);
 
-    // IMPORTANT: allow appointments.js to know email failed
+  } catch (error) {
+
+    console.error("=================================");
+    console.error("EMAIL ERROR ❌");
+    console.error("Message:", error.message);
+    console.error("Code:", error.code);
+    console.error("Response:", error.response);
+    console.error("=================================");
+
     throw error;
   }
 };
 
 module.exports = sendMail;
+
+
+
+
+transporter.verify()
+  .then(() => {
+    console.log("GMAIL SMTP CONNECTION SUCCESSFUL ✅");
+  })
+  .catch((error) => {
+    console.error("GMAIL SMTP CONNECTION FAILED ❌");
+    console.error("Message:", error.message);
+    console.error("Code:", error.code);
+    console.error("Response:", error.response);
+  });
