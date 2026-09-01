@@ -105,12 +105,10 @@
 
 // module.exports = sendMail;
 
-
-
 const nodemailer = require("nodemailer");
 
 /* =========================================
-   GMAIL SMTP CONFIGURATION
+   GMAIL SMTP TRANSPORT
 ========================================= */
 
 const transporter = nodemailer.createTransport({
@@ -123,29 +121,38 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 
-  // Force IPv4 to avoid Render IPv6 connection errors
+  // Force IPv4
   family: 4,
 
-  connectionTimeout: 20000,
-  greetingTimeout: 20000,
-  socketTimeout: 30000,
+  requireTLS: true,
+
+  connectionTimeout: 60000,
+  greetingTimeout: 60000,
+  socketTimeout: 60000,
 
   tls: {
     rejectUnauthorized: false,
+    servername: "smtp.gmail.com",
   },
 });
 
 /* =========================================
-   VERIFY GMAIL SMTP CONNECTION
+   VERIFY CONNECTION
 ========================================= */
 
 const verifyGmail = async () => {
   try {
+    console.log("=================================");
+    console.log("GMAIL: Testing SMTP connection...");
+    console.log("Host: smtp.gmail.com");
+    console.log("Port: 587");
+    console.log("User:", process.env.EMAIL_USER);
+    console.log("=================================");
+
     await transporter.verify();
 
     console.log("=================================");
     console.log("GMAIL SMTP CONNECTION SUCCESSFUL ✅");
-    console.log("Gmail:", process.env.EMAIL_USER);
     console.log("=================================");
 
   } catch (error) {
@@ -169,12 +176,10 @@ const sendMail = async (to, subject, htmlContent) => {
 
   try {
 
-    /* Check recipient */
     if (!to) {
       throw new Error("Recipient email is required");
     }
 
-    /* Check Gmail credentials */
     if (!process.env.EMAIL_USER) {
       throw new Error("EMAIL_USER is missing");
     }
@@ -220,8 +225,5 @@ const sendMail = async (to, subject, htmlContent) => {
   }
 };
 
-/* =========================================
-   EXPORT
-========================================= */
-
 module.exports = sendMail;
+
