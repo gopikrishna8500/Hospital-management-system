@@ -119,8 +119,6 @@
 
 
 
-
-
 const nodemailer = require("nodemailer");
 
 /* =========================================
@@ -130,41 +128,39 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
 
-  // Gmail SSL SMTP
-  port: 465,
+  // Gmail STARTTLS
+  port: 587,
+  secure: false,
 
-  // SSL connection
-  secure: true,
+  // Force IPv4
+  family: 4,
 
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
 
-  // Force IPv4
-  family: 4,
-
-  connectionTimeout: 60000,
-  greetingTimeout: 60000,
+  connectionTimeout: 30000,
+  greetingTimeout: 30000,
   socketTimeout: 60000,
 
   tls: {
-    rejectUnauthorized: false,
-    servername: "smtp.gmail.com",
+    rejectUnauthorized: true,
+    minVersion: "TLSv1.2",
   },
 });
 
 /* =========================================
-   TEST GMAIL CONNECTION
+   TEST SMTP CONNECTION
 ========================================= */
 
-const verifyGmail = async () => {
+(async () => {
   try {
     console.log("=================================");
-    console.log("GMAIL: Testing SMTP connection...");
+    console.log("GMAIL SMTP: Testing connection...");
     console.log("Host: smtp.gmail.com");
-    console.log("Port: 465");
-    console.log("Secure: true");
+    console.log("Port: 587");
+    console.log("IPv4: Forced");
     console.log("User:", process.env.EMAIL_USER);
     console.log("=================================");
 
@@ -181,12 +177,10 @@ const verifyGmail = async () => {
     console.error("Message:", error.message);
     console.error("Code:", error.code);
     console.error("Command:", error.command);
-    console.error("Response:", error.response || "No response");
+    console.error("Response:", error.response);
     console.error("=================================");
   }
-};
-
-verifyGmail();
+})();
 
 /* =========================================
    SEND EMAIL
@@ -194,19 +188,11 @@ verifyGmail();
 
 const sendMail = async (to, subject, htmlContent) => {
 
+  if (!to) {
+    throw new Error("Recipient email is required");
+  }
+
   try {
-
-    if (!to) {
-      throw new Error("Recipient email is required");
-    }
-
-    if (!process.env.EMAIL_USER) {
-      throw new Error("EMAIL_USER is missing");
-    }
-
-    if (!process.env.EMAIL_PASS) {
-      throw new Error("EMAIL_PASS is missing");
-    }
 
     console.log("=================================");
     console.log("GMAIL: Sending email...");
@@ -217,8 +203,8 @@ const sendMail = async (to, subject, htmlContent) => {
 
     const info = await transporter.sendMail({
       from: `"MediTrack Hospital" <${process.env.EMAIL_USER}>`,
-      to,
-      subject,
+      to: to,
+      subject: subject,
       html: htmlContent,
     });
 
@@ -238,7 +224,7 @@ const sendMail = async (to, subject, htmlContent) => {
     console.error("Message:", error.message);
     console.error("Code:", error.code);
     console.error("Command:", error.command);
-    console.error("Response:", error.response || "No response");
+    console.error("Response:", error.response);
     console.error("=================================");
 
     throw error;
@@ -246,4 +232,3 @@ const sendMail = async (to, subject, htmlContent) => {
 };
 
 module.exports = sendMail;
-
