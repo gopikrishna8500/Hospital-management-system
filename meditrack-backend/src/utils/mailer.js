@@ -105,16 +105,36 @@
 
 // module.exports = sendMail;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const nodemailer = require("nodemailer");
 
 /* =========================================
-   GMAIL SMTP TRANSPORT
+   GMAIL SMTP CONFIGURATION
 ========================================= */
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+
+  // Gmail SSL SMTP
+  port: 465,
+
+  // SSL connection
+  secure: true,
 
   auth: {
     user: process.env.EMAIL_USER,
@@ -123,8 +143,6 @@ const transporter = nodemailer.createTransport({
 
   // Force IPv4
   family: 4,
-
-  requireTLS: true,
 
   connectionTimeout: 60000,
   greetingTimeout: 60000,
@@ -137,7 +155,7 @@ const transporter = nodemailer.createTransport({
 });
 
 /* =========================================
-   VERIFY CONNECTION
+   TEST GMAIL CONNECTION
 ========================================= */
 
 const verifyGmail = async () => {
@@ -145,7 +163,8 @@ const verifyGmail = async () => {
     console.log("=================================");
     console.log("GMAIL: Testing SMTP connection...");
     console.log("Host: smtp.gmail.com");
-    console.log("Port: 587");
+    console.log("Port: 465");
+    console.log("Secure: true");
     console.log("User:", process.env.EMAIL_USER);
     console.log("=================================");
 
@@ -162,6 +181,7 @@ const verifyGmail = async () => {
     console.error("Message:", error.message);
     console.error("Code:", error.code);
     console.error("Command:", error.command);
+    console.error("Response:", error.response || "No response");
     console.error("=================================");
   }
 };
@@ -197,8 +217,8 @@ const sendMail = async (to, subject, htmlContent) => {
 
     const info = await transporter.sendMail({
       from: `"MediTrack Hospital" <${process.env.EMAIL_USER}>`,
-      to: to,
-      subject: subject,
+      to,
+      subject,
       html: htmlContent,
     });
 
