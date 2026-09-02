@@ -1,74 +1,152 @@
 const nodemailer = require("nodemailer");
-const dns = require("dns");
+const dns = require("dns").promises;
 
 /* =========================================
-   FORCE NODE.JS TO PREFER IPv4
+   GET GMAIL IPv4 ADDRESS
 ========================================= */
 
-dns.setDefaultResultOrder("ipv4first");
+const getGmailIPv4 = async () => {
+  try {
+    const addresses = await dns.resolve4("smtp.gmail.com");
+
+    console.log("=================================");
+    console.log("GMAIL IPv4 ADDRESSES:");
+    console.log(addresses);
+    console.log("=================================");
+
+    if (!addresses || addresses.length === 0) {
+      throw new Error(
+        "No IPv4 address found for smtp.gmail.com"
+      );
+    }
+
+    return addresses[0];
+
+  } catch (error) {
+    console.error(
+      "GMAIL IPv4 DNS ERROR:",
+      error.message
+    );
+
+    throw error;
+  }
+};
+
 
 /* =========================================
-   GMAIL SMTP CONFIGURATION
+   CREATE SMTP TRANSPORTER
 ========================================= */
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+const createTransporter = async () => {
 
-  port: 587,
+  const gmailIPv4 =
+    await getGmailIPv4();
 
-  secure: false,
+  console.log("=================================");
+  console.log(
+    "Connecting to Gmail IPv4:",
+    gmailIPv4
+  );
+  console.log("Port: 587");
+  console.log("=================================");
 
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+  const transporter =
+    nodemailer.createTransport({
 
-  connectionTimeout: 30000,
+      /*
+       Use Gmail IPv4 address directly
+      */
 
-  greetingTimeout: 30000,
+      host: gmailIPv4,
 
-  socketTimeout: 60000,
+      port: 587,
 
-  family: 4,
+      secure: false,
 
-  tls: {
-    rejectUnauthorized: true,
-    minVersion: "TLSv1.2",
-  },
-});
+      requireTLS: true,
+
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+
+      /*
+       IMPORTANT:
+       Connect using IP,
+       but validate Gmail TLS hostname
+      */
+
+      tls: {
+        servername: "smtp.gmail.com",
+        rejectUnauthorized: true,
+        minVersion: "TLSv1.2",
+      },
+
+      connectionTimeout: 30000,
+
+      greetingTimeout: 30000,
+
+      socketTimeout: 60000,
+
+      family: 4,
+    });
+
+  return transporter;
+};
+
 
 /* =========================================
    TEST SMTP CONNECTION
 ========================================= */
 
 (async () => {
+
   try {
+
     console.log("=================================");
-    console.log("GMAIL SMTP: Testing connection...");
-    console.log("Host: smtp.gmail.com");
-    console.log("Port: 587");
-    console.log("DNS Order: IPv4 First");
-    console.log("IPv4: Forced");
-    console.log("User:", process.env.EMAIL_USER);
+    console.log(
+      "GMAIL SMTP: Testing IPv4 connection..."
+    );
+    console.log(
+      "User:",
+      process.env.EMAIL_USER
+    );
     console.log("=================================");
+
+    const transporter =
+      await createTransporter();
 
     await transporter.verify();
 
     console.log("=================================");
-    console.log("GMAIL SMTP CONNECTION SUCCESSFUL ✅");
+    console.log(
+      "GMAIL SMTP CONNECTION SUCCESSFUL ✅"
+    );
     console.log("=================================");
 
   } catch (error) {
 
     console.error("=================================");
-    console.error("GMAIL SMTP CONNECTION FAILED ❌");
-    console.error("Message:", error.message);
-    console.error("Code:", error.code);
-    console.error("Command:", error.command);
-    console.error("Response:", error.response);
+    console.error(
+      "GMAIL SMTP CONNECTION FAILED ❌"
+    );
+    console.error(
+      "Message:",
+      error.message
+    );
+    console.error(
+      "Code:",
+      error.code
+    );
+    console.error(
+      "Command:",
+      error.command
+    );
     console.error("=================================");
   }
+
 })();
+
 
 /* =========================================
    SEND EMAIL
@@ -86,34 +164,41 @@ const sendMail = async (
     );
   }
 
-  if (!process.env.EMAIL_USER) {
-    throw new Error(
-      "EMAIL_USER environment variable is missing"
-    );
-  }
-
-  if (!process.env.EMAIL_PASS) {
-    throw new Error(
-      "EMAIL_PASS environment variable is missing"
-    );
-  }
-
   try {
 
     console.log("=================================");
-    console.log("GMAIL: Sending email...");
+    console.log(
+      "GMAIL: Creating IPv4 SMTP connection..."
+    );
+    console.log("To:", to);
+    console.log("=================================");
+
+    const transporter =
+      await createTransporter();
+
+    console.log("=================================");
+    console.log(
+      "GMAIL: Sending email..."
+    );
     console.log(
       "From:",
       process.env.EMAIL_USER
     );
-    console.log("To:", to);
-    console.log("Subject:", subject);
+    console.log(
+      "To:",
+      to
+    );
+    console.log(
+      "Subject:",
+      subject
+    );
     console.log("=================================");
 
     const info =
       await transporter.sendMail({
 
-        from: `"MediTrack Hospital" <${process.env.EMAIL_USER}>`,
+        from:
+          `"MediTrack Hospital" <${process.env.EMAIL_USER}>`,
 
         to,
 
@@ -128,10 +213,6 @@ const sendMail = async (
       "EMAIL SENT SUCCESSFULLY ✅"
     );
     console.log(
-      "Recipient:",
-      to
-    );
-    console.log(
       "Message ID:",
       info.messageId
     );
@@ -140,6 +221,8 @@ const sendMail = async (
       info.response
     );
     console.log("=================================");
+
+    transporter.close();
 
     return info;
 
@@ -161,14 +244,12 @@ const sendMail = async (
       "Command:",
       error.command
     );
-    console.error(
-      "Response:",
-      error.response
-    );
     console.error("=================================");
 
     throw error;
   }
+
 };
+
 
 module.exports = sendMail;
