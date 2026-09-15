@@ -8,6 +8,7 @@ const multer = require("multer");
 const fs = require("fs");
 
 const appointmentRoutes = require("./routes/appointments");
+const paymentRoutes = require("./routes/payment.routes");
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ APPOINTMENT ROUTES
 ========================= */
 
 app.use("/api/appointments", appointmentRoutes);
+app.use("/api/payment", paymentRoutes);
 
 /* =========================
 UPLOAD DIRECTORY
